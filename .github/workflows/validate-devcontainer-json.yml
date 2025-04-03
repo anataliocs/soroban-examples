@@ -70,9 +70,13 @@ jobs:
             
             const fs = require('fs');
             var Ajv = require('ajv');
-            var ajv = new Ajv();
+            var ajv = new Ajv({keywords: require("ajv-keywords/dist/definitions")(opts)});
             require("ajv-keywords")(ajv)
             require('ajv-merge-patch')(ajv);
+            ajv.addKeyword('mergePatch', {
+                validate: require('ajv-merge-patch/dist/mergePatch').mergePatch
+            });
+            
             const content = fs.readFileSync("${{github.workspace}}/schemas/devContainer.complete.schema.json", 'utf8');
             fs.writeFileSync('devContainer.complete.schema.json', content.replace(/\$id/g, '"$id"'));
             ajv.addSchema(require('${{github.workspace}}/schemas/base.schema.json'), 'devContainer.base.schema.json');
