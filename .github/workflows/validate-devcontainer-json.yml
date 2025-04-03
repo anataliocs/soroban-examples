@@ -107,8 +107,10 @@ jobs:
               loopRef: 10,
               loopAll: 10,
             });
-            require("ajv-keywords")(ajv);
+            let ajvk = require("ajv-keywords")(ajv);
             
+            ${{ github.workspace }}/schemas/devContainer.complete.schema.json = ajvk.compile(require("${{ github.workspace }}/schemas/devContainer.complete.schema.json"));
+            fs.writeFileSync("${{ github.workspace }}/schemas/devContainer.complete.schema.json", JSON.stringify(require("${{ github.workspace }}/schemas/devContainer.complete.schema.json"), null, 2));
 
       - name: Compile Schemas
         run: |
