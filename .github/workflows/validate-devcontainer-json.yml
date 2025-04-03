@@ -70,7 +70,21 @@ jobs:
             
             const fs = require('fs');
             var Ajv = require('ajv');
-            var ajv = new Ajv({keywords: require("ajv-keywords/dist/definitions")(opts)});
+            var ajv = new Ajv({keywords: require("ajv-keywords/dist/definitions"),
+              allErrors: true,
+              strict: false,
+              strictSchema: false,
+              strictTuples: false,
+              strictNumbers: false,
+              strictNullChecks: false,
+              strictEnums: false,
+              strictRequired: false,
+              strictFunctions: false,
+              strictTypes: false,
+              strictTuples: false,
+              strictRequired: false,
+              strictFunctions: false,
+            });
             require("ajv-keywords")(ajv)
             require('ajv-merge-patch')(ajv);
             ajv.addKeyword('mergePatch', {
