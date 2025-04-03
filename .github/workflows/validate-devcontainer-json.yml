@@ -64,6 +64,7 @@ jobs:
           npm install -g ajv-cli
       - uses: actions/github-script@v7
         with:
+          debug: '${{ runner.debug == '1' }}'
           script: |
             const Ajv2019 = require("ajv/dist/2019");
             // Add metadata schema modules for 2019-09
@@ -144,6 +145,18 @@ jobs:
             ajv.addSchema(require('${{github.workspace}}/schemas/devContainer.codespaces.schema.json'), 'devContainer.codespaces.schema.json');
             ajv.addSchema(require('${{github.workspace}}/schemas/devContainer.vscode.schema.json'), 'devContainer.vscode.schema.json');
             fs.writeFileSync('devContainer.complete.schema.json', JSON.stringify(ajv.getSchema('devContainer.complete.schema.json').schema, null, 2));
+            
+            meta.default.$id = "https://json-schema.org/draft/2019-09/schema/meta/core/metaSchema.json";
+            meta.default.$schema = "https://json-schema.org/draft/2019-09/schema";
+            meta.default.id = "https://json-schema.org/draft/2019-09/schema/meta/core/metaSchema.json";
+            meta.default.title = "Core meta-schema";
+            meta.default.type = "object";
+            meta.default.properties = {
+              "$id": {
+                "type": "string",
+                "format": "uri-reference"
+              },
+            };
       
 
       - name: Compile Schemas
