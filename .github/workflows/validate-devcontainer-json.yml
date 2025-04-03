@@ -111,24 +111,7 @@ jobs:
             
             let ajvModule = require("ajv-keywords/dist/definitions");
             
-            module.exports = {
-              ajvModule,
-              meta,
-              metaSchema,
-              metaValidation,
-              metaMetaData,
-              metaFormat,
-              metaContent,
-              metaApplicator,
-              ajv,
-              ajvk,
-              ajv2019: ajv,
-            };
-            
-            module.exports.ajvModule.addKeyword("mergePatch", {
-              validate: require("ajv-merge-patch/dist/keywords/mergePatch").default,
-              metaSchema: require("ajv-merge-patch/dist/keywords/mergePatch").metaSchema,
-            });
+            return ajvModule;
 
       - name: Compile Schemas
         run: |
