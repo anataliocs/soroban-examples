@@ -79,47 +79,30 @@ jobs:
             const fs = require('fs');
             var ajv = new Ajv2019({
               keywords: require("ajv-keywords/dist/definitions"),
-              allErrors: true,
               strict: false,
-              strictSchema: false,
-              strictTuples: false,
-              strictNumbers: false,
-              strictNullChecks: false,
-              strictEnums: false,
-              strictRequired: false,
-              strictFunctions: false,
-              strictTypes: false,
-              strictTuples: false,
-              strictRequired: false,
-              strictFunctions: false,
               allowUnionTypes: true,
               allowMatchingProperties: true,
               allowAdditionalProperties: true,
               allowAdditionalItems: true,
               allowEmptyObject: true,
               allowMultipleTypes: true,
-              addUsedSchema: false,
               inlineRefs: true,
               removeAdditional: true,
               useDefaults: true,
               coerceTypes: true,
-              loopRequired: 10,
-              loopEnum: 10,
-              loopRef: 10,
-              loopAll: 10,
+              code: {
+                source: true,
+              },
+              $data: true,
             });
+            
             let ajvk = require("ajv-keywords")(ajv);
             
             let ajvModule = require("ajv-keywords/dist/definitions");
-
-            
-            let moduleCode = standaloneCode(ajvk);
-            let ajvKeys = standaloneCode(ajvModule);
             
             
-            fs.writeFileSync(path.join(__dirname, "schemas/ajvk.js"), moduleCode);
+            let moduleCode = standaloneCode(ajv);
             
-            fs.writeFileSync(path.join(__dirname, "schemas/keywords.js"), ajvKeys);
             
             fs.writeFileSync(path.join(__dirname, "schemas/ajv.js"), ajv);
 
