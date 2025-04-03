@@ -117,11 +117,11 @@ jobs:
             let ajvKeys = standaloneCode(ajvModule);
             
             
-            fs.writeFileSync(path.join(__dirname, "/schemas/ajvk.js"), moduleCode);
+            fs.writeFileSync(path.join(__dirname, "schemas/ajvk.js"), moduleCode);
             
-            fs.writeFileSync(path.join(__dirname, "/schemas/keywords.js"), ajvKeys);
+            fs.writeFileSync(path.join(__dirname, "schemas/keywords.js"), ajvKeys);
             
-            fs.writeFileSync(path.join(__dirname, "/schemas/ajv.js"), ajv);
+            fs.writeFileSync(path.join(__dirname, "schemas/ajv.js"), ajv);
 
       - name: Compile Schemas
         run: |
