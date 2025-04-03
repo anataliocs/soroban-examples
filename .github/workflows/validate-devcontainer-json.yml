@@ -112,10 +112,6 @@ jobs:
             
             let ajvModule = require("ajv-keywords/dist/definitions");
 
-
-            console.log(ajvk);
-            console.log(ajvModule);
-            console.log(ajv);
             
             let moduleCode = standaloneCode(ajvk);
             let ajvKeys = standaloneCode(ajvModule);
