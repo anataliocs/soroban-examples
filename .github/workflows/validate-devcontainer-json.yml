@@ -66,6 +66,16 @@ jobs:
         with:
           script: |
             const Ajv2019 = require("ajv/dist/2019");
+            // Add metadata schema modules for 2019-09
+            const meta = require("ajv/dist/refs/json-schema-2019-09/meta/core");
+            const metaSchema = require("ajv/dist/refs/json-schema-2019-09/schema");
+            const metaValidation = require("ajv/dist/refs/json-schema-2019-09/meta/validation");
+            const metaMetaData = require("ajv/dist/refs/json-schema-2019-09/meta/meta-data");
+            const metaFormat = require("ajv/dist/refs/json-schema-2019-09/meta/format");
+            const metaContent = require("ajv/dist/refs/json-schema-2019-09/meta/content");
+            const metaApplicator = require("ajv/dist/refs/json-schema-2019-09/meta/applicator");
+            
+            
             const fs = require('fs');
             var ajv = new Ajv2019({
               keywords: require("ajv-keywords/dist/definitions"),
@@ -91,9 +101,12 @@ jobs:
             });
             require("ajv-keywords")(ajv);
             
-            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2019-09.json'));
-            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2019-09-meta-schema.json'));
-            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2019-09-meta-core.json'));
+            ajv.addKeyword("mergePatch", metaValidation.mergePatch);
+            ajv.addMetaSchema(metaSchema);
+            ajv.addKeyword("merge", metaValidation.merge);
+            ajv.addMetaSchema(meta);
+            
+            
             
             const content = fs.readFileSync("${{github.workspace}}/schemas/devContainer.complete.schema.json", 'utf8');
             fs.writeFileSync('devContainer.complete.schema.json', content.replace(/\$id/g, '"$id"'));
