@@ -107,6 +107,7 @@ jobs:
               verbose: true,
               code: {
                 source: true,
+                lines: true,
               },
               $data: true,
               validateSchema: "log",
@@ -136,8 +137,6 @@ jobs:
             
             let moduleCode = standaloneCode(ajv);
             fs.writeFileSync(path.join(".", "schemas/ajv.js"), moduleCode);
-            
-            console.log(ajv);
 
       - name: Run Standalone Validator
         run: |
