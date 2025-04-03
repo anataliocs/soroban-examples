@@ -108,7 +108,9 @@ jobs:
         run: |
           
           
-          ls ajv.js
+          ls 
+          
+          ajv.js
           
           
           ajv validate --allow-matching-properties --data --allow-union-types --coerce-types \
@@ -121,6 +123,9 @@ jobs:
           -r "devContainer.codespaces.schema.json" \
           -r "devContainer.vscode.schema.json" -c ajv.js
         working-directory: schemas/
+        with:
+          entrypoint: node ajv.js
+          args: ajvKeywords
 
       - name: Set up shellcheck
         uses: ludeeus/action-shellcheck@master
