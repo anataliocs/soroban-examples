@@ -65,10 +65,9 @@ jobs:
       - uses: actions/github-script@v7
         with:
           script: |
-            
+            const Ajv2019 = require("ajv/dist/2019");
             const fs = require('fs');
-            var Ajv = require('ajv');
-            var ajv = new Ajv({
+            var ajv = new Ajv2019({
               keywords: require("ajv-keywords/dist/definitions"),
               allErrors: true,
               strict: false,
@@ -96,8 +95,6 @@ jobs:
             ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2019-09-meta-schema.json'));
             ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2019-09-meta-core.json'));
             
-            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2020-12.json'));
-            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2020-12-meta-schema.json'));
             const content = fs.readFileSync("${{github.workspace}}/schemas/devContainer.complete.schema.json", 'utf8');
             fs.writeFileSync('devContainer.complete.schema.json', content.replace(/\$id/g, '"$id"'));
             ajv.addSchema(require('${{github.workspace}}/schemas/base.schema.json'), 'devContainer.base.schema.json');
