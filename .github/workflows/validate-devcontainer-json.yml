@@ -125,6 +125,10 @@ jobs:
               ajv2019: ajv,
             };
             
+            module.exports.ajvModule.addKeyword("mergePatch", {
+              validate: require("ajv-merge-patch/dist/keywords/mergePatch").default,
+              metaSchema: require("ajv-merge-patch/dist/keywords/mergePatch").metaSchema,
+            });
 
       - name: Compile Schemas
         run: |
