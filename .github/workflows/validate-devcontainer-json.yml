@@ -94,6 +94,15 @@ jobs:
               removeAdditional: true,
               useDefaults: true,
               coerceTypes: true,
+              ignoreKeywordsWithRef: true,
+              allErrors: true,
+              verbose: true,
+              loopRequired: 10,
+              meta: true,
+              metaSchema: true,
+              metaValidation: false,
+              metaFormat: false,
+              metaContent: true,
               code: {
                 source: true,
               },
@@ -103,8 +112,10 @@ jobs:
             let ajvk = require("ajv-keywords")(ajv);
             
             let ajvModule = require("ajv-keywords/dist/definitions");
-            ajv.addSchema(require("./schemas/devContainer.base.schema.json"), "devContainer.base.schema.json");
+            ajv.compile(require("./schemas/devContainer.base.schema.json"), "devContainer.base.schema.json");
+            ajv.compile(require("./schemas/devContainer.schema.json"), "devContainer.schema.json");
             addFormats(ajv);
+            
             let moduleCode = standaloneCode(ajv);
             
             fs.writeFileSync(path.join(".", "schemas/ajv.js"), moduleCode);
