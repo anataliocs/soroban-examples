@@ -105,7 +105,7 @@ jobs:
             let moduleCode = standaloneCode(ajv);
             
             
-            fs.writeFileSync(path.join(__dirname, "schemas/ajv.js"), ajv);
+            fs.writeFileSync(path.join(".", "schemas/ajv.js"), ajv);
 
       - name: Compile Schemas
         run: |
