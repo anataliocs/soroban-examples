@@ -108,9 +108,7 @@ jobs:
       - name: Compile Schemas
         run: |
           
-          ls 
-          
-          node ajv.js
+          node -e "console.log(require('./ajv.js').ajvKeywords())"
           
           
           ajv validate --allow-matching-properties --data --allow-union-types --coerce-types \
