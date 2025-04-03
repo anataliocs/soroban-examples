@@ -61,7 +61,6 @@ jobs:
           npm install json-merge-patch --save
           npm install ajv-keywords
           npm install ajv-merge-patch --save
-          npm install -g ajv-cli
       - uses: actions/github-script@v7
         with:
           script: |
@@ -105,7 +104,7 @@ jobs:
             let moduleCode = standaloneCode(ajv);
             
             
-            fs.writeFileSync(path.join(".", "schemas/ajv.js"), ajv);
+            fs.writeFileSync(path.join(".", "schemas/ajv.js"), moduleCode);
 
       - name: Compile Schemas
         run: |
