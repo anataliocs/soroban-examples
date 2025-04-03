@@ -86,8 +86,9 @@ jobs:
             });
             require("ajv-keywords")(ajv);
             
-            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-07.json'));
             ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2019-09.json'));
+            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2019-09-meta-schema.json'));
+            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2019-09-meta-core.json'));
             ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2020-12.json'));
             ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2020-12-meta-schema.json'));
             const content = fs.readFileSync("${{github.workspace}}/schemas/devContainer.complete.schema.json", 'utf8');
