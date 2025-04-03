@@ -75,6 +75,7 @@ jobs:
             const metaContent = require("ajv/dist/refs/json-schema-2019-09/meta/content");
             const metaApplicator = require("ajv/dist/refs/json-schema-2019-09/meta/applicator");
             
+            const standaloneCode = require("ajv/dist/standalone").default
             const fs = require('fs');
             var ajv = new Ajv2019({
               keywords: require("ajv-keywords/dist/definitions"),
@@ -110,25 +111,31 @@ jobs:
             let ajvk = require("ajv-keywords")(ajv);
             
             let ajvModule = require("ajv-keywords/dist/definitions");
+
+
+            console.log(ajvk);
+            console.log(ajvModule);
+            console.log(ajv);
             
-            return ajvModule;
+            let moduleCode = standaloneCode(ajvk);
+            let ajvKeys = standaloneCode(ajvModule);
+            
+            
+            fs.writeFileSync(path.join(__dirname, "/schemas/ajvk.js"), moduleCode);
+            
+            fs.writeFileSync(path.join(__dirname, "/schemas/keywords.js"), ajvKeys);
+            
+            fs.writeFileSync(path.join(__dirname, "/schemas/ajv.js"), ajv);
 
       - name: Compile Schemas
         run: |
           
-          ls .. -latr | grep ajv-keywords
-          ls -latr | grep ajv-merge-patch
-          ls .. -latr 
           
-          touch file.txt
-          echo ${{steps.set-up-node.outputs.npm-cache.dir}} >> file.txt
-          echo ${{steps.set-up-node.outputs}} >> file.txt
-          echo file.txt
-          
-          ls -latr
+          ls
           
           cp ${{steps.set-up-node.outputs.npm-cache}} .
           
+          echo ${{github.env}}
           
           ajv validate --allow-matching-properties --data --allow-union-types --coerce-types \
           --loop-required=10 --own-properties  \
