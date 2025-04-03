@@ -57,6 +57,7 @@ jobs:
         with:
           node-version: '18'
 
+
       - name: Install ajv-cli
         run: |
           npm install ajv
@@ -69,11 +70,10 @@ jobs:
         working-directory: schemas/
 
       - name: Set up Ajv
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
 
         with:
           script: |
-            script: |
             const fs = require('fs');
             var Ajv = require('ajv');
             var ajv = new Ajv();
