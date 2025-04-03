@@ -108,7 +108,18 @@ jobs:
       - name: Compile Schemas
         run: |
           
-          node -e "console.log(require('./ajv.js'))"
+          node -e "
+            const validate = require('./ajv.js');
+            const data = require('./devcontainer.json');
+            if (!validate(data)) {
+            console.error('Validation failed:', validate.errors);
+            process.exit(1);
+            else {
+              console.log('Validation successful');
+            }
+          "
+          
+          
           
           
           ajv validate --allow-matching-properties --data --allow-union-types --coerce-types \
