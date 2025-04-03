@@ -165,11 +165,9 @@ jobs:
           severity: 'warning'
           scandir: './devcontainer'
 
-      - name: Run Test on .devcontainer scripts
-        working-directory: ./devcontainer/tests
-        with:
-          entrypoint: ./run_tests.sh
+      - name: Run Test on Devcontainer scripts
         run: |
+          ./devcontainer/tests/run_tests.sh
           echo "Tests complete!"
 
       - # Add support for more platforms with QEMU (optional)
