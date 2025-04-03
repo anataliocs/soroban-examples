@@ -85,9 +85,6 @@ jobs:
               strictFunctions: false,
             });
             require("ajv-keywords")(ajv);
-            ajv.addKeyword('mergePatch', {
-                validate: require('ajv-merge-patch/dist/mergePatch').mergePatch
-            });
             
             const content = fs.readFileSync("${{github.workspace}}/schemas/devContainer.complete.schema.json", 'utf8');
             fs.writeFileSync('devContainer.complete.schema.json', content.replace(/\$id/g, '"$id"'));
