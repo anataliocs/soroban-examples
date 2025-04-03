@@ -109,6 +109,24 @@ jobs:
             });
             let ajvk = require("ajv-keywords")(ajv);
             
+            let ajvModule = require("ajv-keywords/dist/definitions");
+            
+            module.exports = {
+              ajvModule,
+              meta,
+              metaSchema,
+              metaValidation,
+              metaMetaData,
+              metaFormat,
+              metaContent,
+              metaApplicator,
+              ajv,
+              ajvk,
+              ajv2019: ajv,
+            };
+            
+            
+            
             ${{ github.workspace }}/schemas/devContainer.complete.schema.json = ajvk.compile(require("${{ github.workspace }}/schemas/devContainer.complete.schema.json"));
             fs.writeFileSync("${{ github.workspace }}/schemas/devContainer.complete.schema.json", JSON.stringify(require("${{ github.workspace }}/schemas/devContainer.complete.schema.json"), null, 2));
 
