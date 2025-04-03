@@ -100,9 +100,7 @@ jobs:
             
             let ajvModule = require("ajv-keywords/dist/definitions");
             
-            
             let moduleCode = standaloneCode(ajv);
-            
             
             fs.writeFileSync(path.join(".", "schemas/ajv.js"), moduleCode);
 
@@ -110,7 +108,9 @@ jobs:
         run: |
           
           
-          ls
+          ls ajv.js
+          
+          
           
           cp ${{steps.set-up-node.outputs.npm-cache}} .
           
@@ -124,7 +124,7 @@ jobs:
           -r "devContainer.base.schema.json" \
           -r "devContainerFeature.schema.json" \
           -r "devContainer.codespaces.schema.json" \
-          -r "devContainer.vscode.schema.json" -c ajv-keywords
+          -r "devContainer.vscode.schema.json" -c ajv.js
         working-directory: schemas/
 
       - name: Set up shellcheck
