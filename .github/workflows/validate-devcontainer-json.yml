@@ -116,11 +116,8 @@ jobs:
       - name: Compile Schemas
         run: |
           
-          ${{steps.set-up-node.outputs.npm-cache.dir}}/bin/ajv compile -s devContainer.complete.schema.json -r devContainer.base.schema.json -r devContainerFeature.schema.json -r devContainer.codespaces.schema.json -r devContainer.vscode.schema.json -c ajv-keywords
-          
-          ${{steps.set-up-node.outputs.npm-cache.dir}}/bin/ajv compile -s devContainer.complete.schema.json -r devContainer.base.schema.json -r devContainerFeature.schema.json -r devContainer.codespaces.schema.json -r devContainer.vscode.schema.json -c ajv-keywords > devContainer.complete.schema.json.compiled.json
-          
-          mv devContainer.complete.schema.json.compiled.json devContainer.complete.schema.json
+          echo ${{steps.set-up-node.outputs.npm-cache.dir}}
+          echo ${{steps.set-up-node.outputs.npm-cache}}
           
           ls
           
