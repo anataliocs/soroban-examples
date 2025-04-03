@@ -100,12 +100,7 @@ jobs:
             let ajvk = require("ajv-keywords")(ajv);
             
             let ajvModule = require("ajv-keywords/dist/definitions");
-            ajv.addSchema(require("./schemas/devContainer.complete.schema.json"), "devContainer.complete.schema.json");
             ajv.addSchema(require("./schemas/devContainer.base.schema.json"), "devContainer.base.schema.json");
-            ajv.addSchema(require("./schemas/devContainerFeature.schema.json"), "devContainerFeature.schema.json");
-            ajv.addSchema(require("./schemas/devContainer.codespaces.schema.json"), "devContainer.codespaces.schema.json");
-            ajv.addSchema(require("./schemas/devContainer.vscode.schema.json"), "devContainer.vscode.schema.json");
-            ajv.addSchema(require("./schemas/base.schema.json"), "base.schema.json");
             
             let moduleCode = standaloneCode(ajv);
             
