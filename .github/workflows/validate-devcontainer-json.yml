@@ -116,10 +116,11 @@ jobs:
       - name: Compile Schemas
         run: |
           
-          echo ${{steps.set-up-node.outputs.npm-cache.dir}}
-          echo ${{steps.set-up-node.outputs.npm-cache}}
+          touch file.txt
+          echo ${{steps.set-up-node.outputs.npm-cache.dir}} >> file.txt
+          echo ${{steps.set-up-node.outputs}} >> file.txt
           
-          ls
+          ls -latr
           
           ajv validate --allow-matching-properties --data --allow-union-types --coerce-types \
           --loop-required=10 --own-properties  \
