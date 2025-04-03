@@ -160,6 +160,22 @@ jobs:
 
       - name: Set up shellcheck
         uses: ludeeus/action-shellcheck@master
+        with:
+          format: 'gcc'
+          severity: 'warning'
+          scandir: './devcontainer'
+
+      - name: Run shellcheck on .devcontainer scripts
+
+        # shellcheck disable=SC2046
+        # shellcheck disable=SC2086
+        # shellcheck disable=SC2006
+        # shellcheck disable=SC2002
+        # shellcheck disable=SC2001
+        # shellcheck disable=SC2005
+        run: |
+          shellcheck ./devcontainer/**/*.sh
+          ./devcontainer/tests/run_tests.sh
 
       - # Add support for more platforms with QEMU (optional)
         # https://github.com/docker/setup-qemu-action
@@ -170,17 +186,6 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
-      - name: Run shellcheck on .devcontainer scripts
-        # shellcheck disable=SC2046
-        # shellcheck disable=SC2086
-        # shellcheck disable=SC2006
-        # shellcheck disable=SC2002
-        # shellcheck disable=SC2001
-        # shellcheck disable=SC2005
-        run: |
-          shellcheck .devcontainer/**/*.sh
-          shellcheck .devcontainer/tests/run_tests.sh
 
       - name: Test build and push manual prebuild cache
         run: |
