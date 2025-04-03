@@ -130,7 +130,7 @@ jobs:
           -r "devContainer.base.schema.json" \
           -r "devContainerFeature.schema.json" \
           -r "devContainer.codespaces.schema.json" \
-          -r "devContainer.vscode.schema.json" -c ajv.js
+          -r "devContainer.vscode.schema.json" -c
         working-directory: schemas/
 
       - name: Set up shellcheck
