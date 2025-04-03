@@ -75,6 +75,7 @@ jobs:
             const metaContent = require("ajv/dist/refs/json-schema-2019-09/meta/content");
             const metaApplicator = require("ajv/dist/refs/json-schema-2019-09/meta/applicator");
             
+            const path = require("path");
             const standaloneCode = require("ajv/dist/standalone").default
             const fs = require('fs');
             var ajv = new Ajv2019({
