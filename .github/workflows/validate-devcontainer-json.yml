@@ -100,17 +100,12 @@ jobs:
             let ajvk = require("ajv-keywords")(ajv);
             
             let ajvModule = require("ajv-keywords/dist/definitions");
-            ajv.addSchema("./schemas/devContainer.complete.schema.json", "base.schema.json");
-            ajv.addSchema("./schemas/devContainer.base.schema.json", "devContainer.base.schema.json");
-            ajv.addSchema("./schemas/devContainerFeature.schema.json", "devContainerFeature.schema.json");
-            ajv.addSchema("./schemas/devContainer.codespaces.schema.json", "devContainer.codespaces.schema.json");
-            ajv.addSchema("./schemas/devContainer.vscode.schema.json", "devContainer.vscode.schema.json");
-            ajv.addSchema(ajvModule, "ajv-keywords.json");
-            ajv.addSchema(meta, "meta.json");
-            ajv.addSchema(metaSchema, "meta-schema.json");
-            ajv.addSchema(metaValidation, "meta-validation.json");
-            ajv.addSchema(metaMetaData, "meta-meta-data.json");
-            
+            ajv.addSchema(require("./schemas/devContainer.complete.schema.json"), "devContainer.complete.schema.json");
+            ajv.addSchema(require("./schemas/devContainer.base.schema.json"), "devContainer.base.schema.json");
+            ajv.addSchema(require("./schemas/devContainerFeature.schema.json"), "devContainerFeature.schema.json");
+            ajv.addSchema(require("./schemas/devContainer.codespaces.schema.json"), "devContainer.codespaces.schema.json");
+            ajv.addSchema(require("./schemas/devContainer.vscode.schema.json"), "devContainer.vscode.schema.json");
+            ajv.addSchema(require("./schemas/base.schema.json"), "base.schema.json");
             
             let moduleCode = standaloneCode(ajv);
             
