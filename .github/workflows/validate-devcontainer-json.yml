@@ -110,7 +110,7 @@ jobs:
           
           node -e "
             const validate = require('./ajv.js');
-            const data = require('devcontainer.json');
+            const data = "devcontainer.json";
             if (!validate(data)) {
             console.error('Validation failed:', validate.errors);
           
