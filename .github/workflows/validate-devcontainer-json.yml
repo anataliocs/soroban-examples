@@ -86,6 +86,10 @@ jobs:
             });
             require("ajv-keywords")(ajv);
             
+            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-07.json'));
+            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2019-09.json'));
+            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2020-12.json'));
+            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-2020-12-meta-schema.json'));
             const content = fs.readFileSync("${{github.workspace}}/schemas/devContainer.complete.schema.json", 'utf8');
             fs.writeFileSync('devContainer.complete.schema.json', content.replace(/\$id/g, '"$id"'));
             ajv.addSchema(require('${{github.workspace}}/schemas/base.schema.json'), 'devContainer.base.schema.json');
@@ -93,7 +97,7 @@ jobs:
             ajv.addSchema(require('${{github.workspace}}/schemas/devContainer.codespaces.schema.json'), 'devContainer.codespaces.schema.json');
             ajv.addSchema(require('${{github.workspace}}/schemas/devContainer.vscode.schema.json'), 'devContainer.vscode.schema.json');
             fs.writeFileSync('devContainer.complete.schema.json', JSON.stringify(ajv.getSchema('devContainer.complete.schema.json').schema, null, 2));
-            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-19.json'));  
+      
 
       - name: Compile Schemas
         run: |
