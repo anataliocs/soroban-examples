@@ -116,11 +116,19 @@ jobs:
       - name: Compile Schemas
         run: |
           
+          ls .. -latr | grep ajv-keywords
+          ls -latr | grep ajv-merge-patch
+          ls .. -latr 
+          
           touch file.txt
           echo ${{steps.set-up-node.outputs.npm-cache.dir}} >> file.txt
           echo ${{steps.set-up-node.outputs}} >> file.txt
+          echo file.txt
           
           ls -latr
+          
+          cp ${{steps.set-up-node.outputs.npm-cache}} .
+          
           
           ajv validate --allow-matching-properties --data --allow-union-types --coerce-types \
           --loop-required=10 --own-properties  \
