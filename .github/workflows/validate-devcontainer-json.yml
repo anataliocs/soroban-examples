@@ -113,10 +113,15 @@ jobs:
             const data = require('./devcontainer.json');
             if (!validate(data)) {
             console.error('Validation failed:', validate.errors);
+          
             process.exit(1);
+            }
             else {
               console.log('Validation successful');
             }
+          
+            let ajvKeywords = validate.keywords;
+            console.log(validate.ajvKeywords);
           "
           
           
