@@ -110,54 +110,6 @@ jobs:
             });
             require("ajv-keywords")(ajv);
             
-            metaSchema.id.replace(/#$/, "2019-09-schema.json");
-            metaMetaData.id.replace(/#$/, "2019-09-data.json");
-            metaFormat.id.replace(/#$/, "2019-09-format.json");
-            metaContent.id.replace(/#$/, "2019-09-content.json");
-            metaApplicator.id.replace(/#$/, "2019-09-app.json");
-            metaValidation.id.replace(/#$/, "2019-09-validation.json");
-            meta.id.replace(/#$/, "2019-09-meta-schema.json");
-            
-            metaSchema.default.$id = metaSchema.id;
-            metaMetaData.default.$id = metaMetaData.id;
-            metaFormat.default.$id = metaFormat.id;
-            metaContent.default.$id = metaContent.id;
-            metaApplicator.default.$id = metaApplicator.id;
-            metaValidation.default.$id = metaValidation.id;
-            meta.default.$id = meta.id;
-            
-            ajv.addMetaSchema(metaSchema.default);
-            ajv.addMetaSchema(metaMetaData.default);
-            ajv.addMetaSchema(metaFormat.default);
-            ajv.addMetaSchema(metaContent.default);
-            ajv.addMetaSchema(metaApplicator.default);
-            ajv.addMetaSchema(metaValidation.default);
-            ajv.addMetaSchema(meta.default);
-            
-            
-            ajv.addKeyword("merge", metaValidation.merge);
-            ajv.addKeyword("mergePatch", metaValidation.mergePatch);
-            
-            const content = fs.readFileSync("${{github.workspace}}/schemas/devContainer.complete.schema.json", 'utf8');
-            fs.writeFileSync('devContainer.complete.schema.json', content.replace(/\$id/g, '"$id"'));
-            ajv.addSchema(require('${{github.workspace}}/schemas/base.schema.json'), 'devContainer.base.schema.json');
-            ajv.addSchema(require('${{github.workspace}}/schemas/devContainerFeature.schema.json'), 'devContainerFeature.schema.json');
-            ajv.addSchema(require('${{github.workspace}}/schemas/devContainer.codespaces.schema.json'), 'devContainer.codespaces.schema.json');
-            ajv.addSchema(require('${{github.workspace}}/schemas/devContainer.vscode.schema.json'), 'devContainer.vscode.schema.json');
-            fs.writeFileSync('devContainer.complete.schema.json', JSON.stringify(ajv.getSchema('devContainer.complete.schema.json').schema, null, 2));
-            
-            meta.default.$id = "https://json-schema.org/draft/2019-09/schema/meta/core/metaSchema.json";
-            meta.default.$schema = "https://json-schema.org/draft/2019-09/schema";
-            meta.default.id = "https://json-schema.org/draft/2019-09/schema/meta/core/metaSchema.json";
-            meta.default.title = "Core meta-schema";
-            meta.default.type = "object";
-            meta.default.properties = {
-              "$id": {
-                "type": "string",
-                "format": "uri-reference"
-              },
-            };
-      
 
       - name: Compile Schemas
         run: |
