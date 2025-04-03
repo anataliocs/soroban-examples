@@ -102,11 +102,13 @@ jobs:
             require("ajv-keywords")(ajv);
             
             ajv.addKeyword("mergePatch", metaValidation.mergePatch);
-            ajv.addMetaSchema(metaSchema);
+            ajv.addMetaSchema(metaSchema.default);
+            ajv.addMetaSchema(metaMetaData.default);
+            ajv.addMetaSchema(metaFormat.default);
+            ajv.addMetaSchema(metaContent.default);
+            ajv.addMetaSchema(metaApplicator.default);
             ajv.addKeyword("merge", metaValidation.merge);
-            ajv.addMetaSchema(meta);
-            
-            
+            ajv.addMetaSchema(meta.default.schema.id, meta.default.schema);
             
             const content = fs.readFileSync("${{github.workspace}}/schemas/devContainer.complete.schema.json", 'utf8');
             fs.writeFileSync('devContainer.complete.schema.json', content.replace(/\$id/g, '"$id"'));
