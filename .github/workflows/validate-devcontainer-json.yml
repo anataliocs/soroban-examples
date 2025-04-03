@@ -114,6 +114,7 @@ jobs:
             let ajvModule = require("ajv-keywords/dist/definitions");
             ajv.compile(require("./schemas/devContainer.base.schema.json"), "devContainer.base.schema.json");
             ajv.compile(require("./schemas/devContainer.schema.json"), "devContainer.schema.json");
+            ajv.compile(require("./schemas/devContainerFeature.schema.json"), "devContainerFeature.schema.json");
             addFormats(ajv);
             
             let moduleCode = standaloneCode(ajv);
@@ -124,17 +125,17 @@ jobs:
         run: |
           
           node -e "
-            const ajv = require('./ajv.js');
+            const validate = require('./ajv.js');
             const data = 'devcontainer.json';
-            if (!ajv.validate(data)) {
-            console.error('Validation failed:', ajv.errors);
+            if (!validate(data)) {
+            console.error('Validation failed:', validate.errors);
           
             }
             else {
               console.log('Validation successful');
             }
           
-            let ajvKeywords = ajv.keywords;
+            let ajvKeywords = validate.keywords;
             console.log(ajvKeywords);
           "
           
