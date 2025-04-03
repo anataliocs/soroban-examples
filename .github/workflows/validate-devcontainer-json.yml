@@ -55,11 +55,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-
-
-      - name: Install ajv-cli
-        run: |
+          node-version: '20.x'
+      - run: |
           npm install ajv
           npm install json-merge-patch --save
           npm install ajv-keywords
@@ -67,26 +64,23 @@ jobs:
           npm install ajv-formats
           npm install ajv-cli
           npm install -g ajv-cli
-
-      - name: Set up Ajv
-        uses: actions/github-script@v7
-
+      - uses: actions/github-script@v7
         with:
-
           script: |
+            
             const fs = require('fs');
             var Ajv = require('ajv');
             var ajv = new Ajv();
             require("ajv-keywords")(ajv)
             require('ajv-merge-patch')(ajv);
-            const content = fs.readFileSync('devContainer.complete.schema.json', 'utf8');
+            const content = fs.readFileSync("${{github.workspace}}/schemas/devContainer.complete.schema.json", 'utf8');
             fs.writeFileSync('devContainer.complete.schema.json', content.replace(/\$id/g, '"$id"'));
-            ajv.addSchema(require('./devContainer.base.schema.json'), 'devContainer.base.schema.json');
-            ajv.addSchema(require('./devContainerFeature.schema.json'), 'devContainerFeature.schema.json');
-            ajv.addSchema(require('./devContainer.codespaces.schema.json'), 'devContainer.codespaces.schema.json');
-            ajv.addSchema(require('./devContainer.vscode.schema.json'), 'devContainer.vscode.schema.json');
+            ajv.addSchema(require('${{github.workspace}}/schemas/base.schema.json'), 'devContainer.base.schema.json');
+            ajv.addSchema(require('${{github.workspace}}/schemas/devContainerFeature.schema.json'), 'devContainerFeature.schema.json');
+            ajv.addSchema(require('${{github.workspace}}/schemas/devContainer.codespaces.schema.json'), 'devContainer.codespaces.schema.json');
+            ajv.addSchema(require('${{github.workspace}}/schemas/devContainer.vscode.schema.json'), 'devContainer.vscode.schema.json');
             fs.writeFileSync('devContainer.complete.schema.json', JSON.stringify(ajv.getSchema('devContainer.complete.schema.json').schema, null, 2));
-            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-19.json'));    
+            ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-19.json'));  
 
       - name: Compile Schemas
         run: |
