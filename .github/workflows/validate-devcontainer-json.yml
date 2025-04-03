@@ -113,18 +113,18 @@ jobs:
         run: |
           
           node -e "
-            const validate = require('./ajv.js');
+            const ajv = require('./ajv.js');
             const data = 'devcontainer.json';
-            if (!validate(data)) {
-            console.error('Validation failed:', validate.errors);
+            if (!ajv.validate(data)) {
+            console.error('Validation failed:', ajv.errors);
           
             }
             else {
               console.log('Validation successful');
             }
           
-            let ajvKeywords = validate.keywords;
-            console.log(validate.ajvKeywords);
+            let ajvKeywords = ajv.keywords;
+            console.log(ajvKeywords);
           "
           
           
