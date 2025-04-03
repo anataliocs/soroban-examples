@@ -75,7 +75,6 @@ jobs:
             const metaContent = require("ajv/dist/refs/json-schema-2019-09/meta/content");
             const metaApplicator = require("ajv/dist/refs/json-schema-2019-09/meta/applicator");
             
-            
             const fs = require('fs');
             var ajv = new Ajv2019({
               keywords: require("ajv-keywords/dist/definitions"),
@@ -97,18 +96,48 @@ jobs:
               allowAdditionalProperties: true,
               allowAdditionalItems: true,
               allowEmptyObject: true,
-              allowMultipleTypes: true
+              allowMultipleTypes: true,
+              addUsedSchema: false,
+              inlineRefs: true,
+              uniqueItems: false,
+              removeAdditional: true,
+              useDefaults: true,
+              coerceTypes: true,
+              format: "full",
+              loopRequired: 10,
+              loopEnum: 10,
+              loopRef: 10,
+              loopAll: 10,
             });
             require("ajv-keywords")(ajv);
             
-            ajv.addKeyword("mergePatch", metaValidation.mergePatch);
+            metaSchema.id.replace(/#$/, "2019-09-schema.json");
+            metaMetaData.id.replace(/#$/, "2019-09-data.json");
+            metaFormat.id.replace(/#$/, "2019-09-format.json");
+            metaContent.id.replace(/#$/, "2019-09-content.json");
+            metaApplicator.id.replace(/#$/, "2019-09-app.json");
+            metaValidation.id.replace(/#$/, "2019-09-validation.json");
+            meta.id.replace(/#$/, "2019-09-meta-schema.json");
+            
+            metaSchema.default.$id = metaSchema.id;
+            metaMetaData.default.$id = metaMetaData.id;
+            metaFormat.default.$id = metaFormat.id;
+            metaContent.default.$id = metaContent.id;
+            metaApplicator.default.$id = metaApplicator.id;
+            metaValidation.default.$id = metaValidation.id;
+            meta.default.$id = meta.id;
+            
             ajv.addMetaSchema(metaSchema.default);
             ajv.addMetaSchema(metaMetaData.default);
             ajv.addMetaSchema(metaFormat.default);
             ajv.addMetaSchema(metaContent.default);
             ajv.addMetaSchema(metaApplicator.default);
+            ajv.addMetaSchema(metaValidation.default);
+            ajv.addMetaSchema(meta.default);
+            
+            
             ajv.addKeyword("merge", metaValidation.merge);
-            ajv.addMetaSchema(meta.default.schema.id, meta.default.schema);
+            ajv.addKeyword("mergePatch", metaValidation.mergePatch);
             
             const content = fs.readFileSync("${{github.workspace}}/schemas/devContainer.complete.schema.json", 'utf8');
             fs.writeFileSync('devContainer.complete.schema.json', content.replace(/\$id/g, '"$id"'));
