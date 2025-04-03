@@ -100,6 +100,10 @@ jobs:
             let ajvk = require("ajv-keywords")(ajv);
             
             let ajvModule = require("ajv-keywords/dist/definitions");
+            ajv.addKeyword("mergePatch", {
+              validate: require("ajv-merge-patch/dist/merge-patch").mergePatch,
+              errors: false,
+            });
             
             let moduleCode = standaloneCode(ajv);
             
@@ -110,7 +114,7 @@ jobs:
           
           node -e "
             const validate = require('./ajv.js');
-            const data = "devcontainer.json";
+            const data = 'devcontainer.json';
             if (!validate(data)) {
             console.error('Validation failed:', validate.errors);
           
