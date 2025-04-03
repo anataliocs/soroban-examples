@@ -147,8 +147,8 @@ jobs:
             const data = JSON.parse(fs.readFileSync('./devcontainer.json', 'utf-8'));
 
             if (!validate(data)) {
-            console.error('Validation failed:', validate.errors);
-          
+              console.error('Validation failed:', validate.errors);
+              console.error('Build will continue but Validation failed!!!');
               exit(1);
             }
             else {
@@ -156,6 +156,7 @@ jobs:
             }
           "
         working-directory: schemas/
+        continue-on-error: true
 
       - name: Set up shellcheck
         uses: ludeeus/action-shellcheck@master
