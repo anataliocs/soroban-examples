@@ -111,11 +111,6 @@ jobs:
           ls ajv.js
           
           
-          
-          cp ${{steps.set-up-node.outputs.npm-cache}} .
-          
-          echo ${{github.env}}
-          
           ajv validate --allow-matching-properties --data --allow-union-types --coerce-types \
           --loop-required=10 --own-properties  \
           --inline-refs=true --all-errors=true --strict=false --verbose --use-defaults --remove-additional=failing \
