@@ -60,9 +60,7 @@ jobs:
           npm install ajv
           npm install json-merge-patch --save
           npm install ajv-keywords
-          npm install ajv-merge-patch
-          npm install ajv-formats
-          npm install ajv-cli
+          npm install ajv-merge-patch --save
           npm install -g ajv-cli
       - uses: actions/github-script@v7
         with:
@@ -70,7 +68,8 @@ jobs:
             
             const fs = require('fs');
             var Ajv = require('ajv');
-            var ajv = new Ajv({keywords: require("ajv-keywords/dist/definitions"),
+            var ajv = new Ajv({
+              keywords: require("ajv-keywords/dist/definitions"),
               allErrors: true,
               strict: false,
               strictSchema: false,
@@ -85,8 +84,7 @@ jobs:
               strictRequired: false,
               strictFunctions: false,
             });
-            require("ajv-keywords")(ajv)
-            require('ajv-merge-patch')(ajv);
+            require("ajv-keywords")(ajv);
             ajv.addKeyword('mergePatch', {
                 validate: require('ajv-merge-patch/dist/mergePatch').mergePatch
             });
