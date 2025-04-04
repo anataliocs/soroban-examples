@@ -60,15 +60,30 @@ jobs:
 
 
   build-and-push-cache:
-    name: Setup Devcontainer CLI
+    name: Devcontainer CLI Build and Push Cache
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup PATH
+        run: |
+          echo ::notice title={Setup Permissions}::{Add permissions to .devcontainers/}
+          chmod -R +rwx .devcontainer
+
+          echo ::notice title={Setup Workspace}::{Add .devcontainers/ to PATH}
+          echo "${{github.workspace}}/.devcontainer" >> "$GITHUB_PATH"
+          echo "${{github.workspace}}/.devcontainer/tests" >> "$GITHUB_PATH"
+
+          echo ::notice title={Test Setup}::{Print contents of .devcontainers}
+          ls .devcontainer
+          ls .devcontainer/tests
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
       - run: npm install npm install -g @devcontainers/cli
-        working-directory: ${{ github.action_path }}
+        working-directory: ${{ github.workspace }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -83,12 +98,17 @@ jobs:
           cache-image: 'true'
           image: 'docker.io/tonistiigi/binfmt:latest'
 
-      - name: Test build and push manual prebuild cache
+      - name: Test build and Push Manual Prebuild cache
         run: |
-          ls
-          chmod +x tests/build_devcontainer_ci.sh
-          tests/build_devcontainer_ci.sh $CACHING_IMG $OCI_CACHING_IMG
+          echo ::notice title={Building with Devcontainer CLI}::{Building Devcontainer and pushing prebuild cache}
+          
+          chmod +x ${{github.workspace}}/.devcontainer/tests/build_devcontainer_ci.sh
+          ${{github.workspace}}/.devcontainer/tests/build_devcontainer_ci.sh $CACHING_IMG $OCI_CACHING_IMG
+          
+          echo "### Devcontainer CLI Build Successful!!! :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "### Manual Prebuild Cache images pushed to repository!!! :rocket:" >> $GITHUB_STEP_SUMMARY
         env:
           CACHING_IMG: ${{ github.event.inputs.CACHING_IMG }}
           OCI_CACHING_IMG: ${{ github.event.inputs.OCI_CACHING_IMG }}
           BUILDKIT_INLINE_CACHE: 1
+        working-directory: ${{github.workspace}}
