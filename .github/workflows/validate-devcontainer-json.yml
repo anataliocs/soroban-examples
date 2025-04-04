@@ -10,27 +10,30 @@ on:
   workflow_dispatch:
     inputs:
       STRICT_SCHEMA_VALIDATION:
-        description: 'Fail on JSON Schema validation?'
+        description: 'Optional JSON Schema validation?'
         type: boolean
         required: true
-        default: false
+        default: true
 
 jobs:
   validate-devcontainer-json:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{github.workspace}}
-        shell: bash
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          clean: 'true'
-          set-safe-directory: 'true'
-          show-progress: 'true'
-          path: ${{github.workspace}}
+      - name: Setup PATH
+        run: |
+          echo ::notice title={Setup Permissions}::{Add permissions to .devcontainers/}
+          chmod -R +rwx .devcontainer
+
+          echo ::notice title={Setup Workspace}::{Add .devcontainers/ to PATH}
+          echo "${{github.workspace}}/.devcontainer" >> "$GITHUB_PATH"
+          echo "${{github.workspace}}/.devcontainer/tests" >> "$GITHUB_PATH"
+
+          echo ::notice title={Test Setup}::{Print contents of .devcontainers}
+          ls .devcontainer
+          ls .devcontainer/tests
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -48,7 +51,7 @@ jobs:
       - name: Stage JSON Schema Testing Area
         run: |
           mkdir -p schemas/
-          cp .devcontainer/devcontainer.json schemas/
+          cp "${{github.workspace}}/.devcontainer/devcontainer.json" schemas/
 
       - name: Download DevContainer JSON Schemas
         env:
