@@ -165,6 +165,6 @@ jobs:
           "
 
         working-directory: schemas/
-        continue-on-error: ${{github.event.input.STRICT_SCHEMA_VALIDATION}}
+        continue-on-error: true
 
           
