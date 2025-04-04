@@ -176,6 +176,6 @@ jobs:
         if: ${{ failure() }}
         run: |
           
-          ::warning file={devcontainer.json},line={0},endLine={76},title={JSON Schema Validation 
+          echo ::warning file={devcontainer.json},line={0},endLine={76},title={JSON Schema Validation 
           Issues}::{Potential 
           errors in devcontainer.json schema.  Double-check your config before deploying}
