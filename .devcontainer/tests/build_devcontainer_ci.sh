@@ -71,5 +71,5 @@ oci_output=$(devcontainer build \
 oci_image_name=$(echo "$oci_output" | jq -r '.imageName[0]')
 
 # Push new OCI pre-build
-docker tag "${oci_image_name}":latest "${oci_pre_build_image}":latest
+#docker tag "${oci_image_name}":latest "${oci_pre_build_image}":latest
 docker push "${oci_pre_build_image}":latest

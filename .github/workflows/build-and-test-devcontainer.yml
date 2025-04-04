@@ -91,6 +91,11 @@ jobs:
           buildkitd-flags: true
           cache-binary: 'true'
 
+      - name: Pull Prebuild Cache Images
+        run: |
+          docker pull ${{ github.event.inputs.CACHING_IMG }}
+          docker pull ${{ github.event.inputs.OCI_CACHING_IMG }}
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
@@ -106,7 +111,7 @@ jobs:
           ${{github.workspace}}/.devcontainer/tests/build_devcontainer_ci.sh $CACHING_IMG $OCI_CACHING_IMG
           
           echo "### Devcontainer CLI Build Successful!!! :rocket:" >> $GITHUB_STEP_SUMMARY
-          echo "### Manual Prebuild Cache images pushed to repository!!! :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "### Pushing ofManual Prebuild Cache images currently disabled" >> $GITHUB_STEP_SUMMARY
         env:
           CACHING_IMG: ${{ github.event.inputs.CACHING_IMG }}
           OCI_CACHING_IMG: ${{ github.event.inputs.OCI_CACHING_IMG }}
