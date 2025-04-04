@@ -72,7 +72,8 @@ jobs:
           npm install ajv-formats
           npm install ajv-errors
 
-      - uses: actions/github-script@v7
+      - name: Validate Devcontainer JSON Schema
+        uses: actions/github-script@v7
         with:
           script: |
             const Ajv2019 = require("ajv/dist/2019");
@@ -138,7 +139,7 @@ jobs:
             let moduleCode = standaloneCode(ajv);
             fs.writeFileSync(path.join(".", "schemas/ajv.js"), moduleCode);
 
-      - name: Run Standalone Validator
+      - name: Run Standalone JSON Schema Validator
         run: |
           
           node -e "
@@ -163,10 +164,13 @@ jobs:
         with:
           format: 'gcc'
           severity: 'warning'
-          scandir: '${{github.workspace}}./devcontainer'
+          scandir: '${{github.workspace}}./devcontainer/'
+
 
       - name: Run Test on Devcontainer scripts
         run: |
+          ls
+          pwd
           ${{github.workspace}}./devcontainer/tests/run_tests.sh
           echo "Tests complete!"
 
