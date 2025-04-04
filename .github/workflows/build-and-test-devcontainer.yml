@@ -21,6 +21,11 @@ on:
 jobs:
   test-and-build-devcontainer:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: .devcontainer/
+
 
     steps:
       - name: Checkout repository
@@ -36,10 +41,6 @@ jobs:
           node-version: '20.x'
       - run: |
           npm install npm install -g @devcontainers/cli
-          npm install -g flatten-this-folder
-          echo "Flattening directory structure"
-          flatten .devcontainer
-          ls
 
       - name: Run Shellcheck on Devcontainer scripts
         uses: ludeeus/action-shellcheck@master
@@ -72,6 +73,7 @@ jobs:
           cache-binary: 'true'
 
       - name: Test build and push manual prebuild cache
+        working-directory:
         run: |
           ls
           chmod +x tests/build_devcontainer_ci.sh

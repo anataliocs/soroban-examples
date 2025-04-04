@@ -18,6 +18,10 @@ on:
 jobs:
   validate-devcontainer-json:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: .devcontainer/
 
     steps:
       - name: Checkout repository
