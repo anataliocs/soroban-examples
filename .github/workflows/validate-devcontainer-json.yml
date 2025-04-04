@@ -165,12 +165,11 @@ jobs:
           format: 'gcc'
           severity: 'warning'
           scandir: '${{github.workspace}}/.devcontainer/'
-
+          ignore_paths: '/tests'
+          additional_files: 'post_start_cli_autocomplete.sh'
 
       - name: Run Test on Devcontainer scripts
         run: |
-          ls
-          pwd
           ${{github.workspace}}/.devcontainer/tests/run_tests.sh
           echo "Tests complete!"
 
