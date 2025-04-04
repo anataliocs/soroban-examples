@@ -91,11 +91,6 @@ jobs:
           buildkitd-flags: true
           cache-binary: 'true'
 
-      - name: Pull Prebuild Cache Images
-        run: |
-          docker pull ${{ github.event.inputs.CACHING_IMG }}
-          docker pull ${{ github.event.inputs.OCI_CACHING_IMG }}
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
