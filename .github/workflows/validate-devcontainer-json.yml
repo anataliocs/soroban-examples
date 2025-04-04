@@ -27,10 +27,26 @@ jobs:
           set-safe-directory: 'true'
           show-progress: 'true'
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - run: |
+          npm install ajv
+          npm install json-merge-patch --save
+          npm install ajv-keywords
+          npm install ajv-merge-patch --save
+          npm install -g npm
+          npm install ajv-formats
+          npm install ajv-errors
+          npm install -g flatten-this-folder
+          flatten .devcontainer
+          ls
+
       - name: Stage Schema Testing Area
         run: |
           mkdir -p schemas/
-          cp .devcontainer/devcontainer.json schemas/
+          cp devcontainer.json schemas/
 
       - name: Download DevContainer JSON Schemas
         env:
@@ -57,19 +73,6 @@ jobs:
           sed -i -e 's|json-schema.org/draft-07/schema|json-schema.org/draft/2019-09/schema|g' devContainer.vscode.machine.schema.json
 
         working-directory: schemas/
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-      - run: |
-          npm install ajv
-          npm install json-merge-patch --save
-          npm install ajv-keywords
-          npm install ajv-merge-patch --save
-          npm install -g npm
-          npm install ajv-formats
-          npm install ajv-errors
 
       - name: Validate Devcontainer JSON Schema
         uses: actions/github-script@v7

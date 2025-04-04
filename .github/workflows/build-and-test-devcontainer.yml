@@ -33,6 +33,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
+      - run: |
+          npm install npm install -g @devcontainers/cli
+          npm install -g flatten-this-folder
+          flatten .devcontainer
+          ls
 
       - name: Run Shellcheck on Devcontainer scripts
         uses: ludeeus/action-shellcheck@master
@@ -67,7 +72,6 @@ jobs:
       - name: Test build and push manual prebuild cache
         run: |
           ls
-          npm install npm install -g @devcontainers/cli
           chmod +x .devcontainer/tests/build_devcontainer_ci.sh
           .devcontainer/tests/build_devcontainer_ci.sh $CACHING_IMG $OCI_CACHING_IMG
         env:
