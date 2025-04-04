@@ -74,8 +74,6 @@ jobs:
           sed -i -e 's|json-schema.org/draft-07/schema|json-schema.org/draft/2019-09/schema|g' devContainer.vscode.schema.json
           sed -i -e 's|json-schema.org/draft-07/schema|json-schema.org/draft/2019-09/schema|g' devContainer.vscode.machine.schema.json
 
-          ::notice title={JSON Schema Downloads Complete}::{JSON schemas for devcontainers, features, codespace 
-          and VS Code complete}
         working-directory: schemas/
 
       - name: Validate Devcontainer JSON Schema
@@ -144,9 +142,6 @@ jobs:
             
             let moduleCode = standaloneCode(ajv);
             fs.writeFileSync(path.join(".", "schemas/ajv.js"), moduleCode);
-            
-            ::notice title={JSON Validator Configuration Complete}::{The next build step will report any 
-            potential issues in your devcontainer.json config.}
 
       - name: Run Standalone JSON Schema Validator
         run: |
@@ -166,9 +161,6 @@ jobs:
             }
           "
 
-          ::notice title={JSON Schema Validation Complete}::{Please review any warnings if they weren't severe 
-          enough to break the build.}
-
         working-directory: schemas/
         continue-on-error: ${{github.event.input.STRICT_SCHEMA_VALIDATION}}
 
@@ -176,6 +168,3 @@ jobs:
         if: ${{ failure() }}
         run: |
           
-          echo ::warning file={devcontainer.json},line={0},endLine={76},title={JSON Schema Validation 
-          Issues}::{Potential 
-          errors in devcontainer.json schema.  Double-check your config before deploying}
