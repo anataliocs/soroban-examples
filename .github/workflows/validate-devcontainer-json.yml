@@ -26,7 +26,6 @@ jobs:
           clean: 'true'
           set-safe-directory: 'true'
           show-progress: 'true'
-          sparse-checkout: './devcontainer/'
 
       - name: Stage Schema Testing Area
         run: |
@@ -157,4 +156,4 @@ jobs:
             }
           "
         working-directory: schemas/
-        continue-on-error: ${{github.event.input.STRICT_SCHEMA_VALIDATION}} || false
+        continue-on-error: ${{github.event.input.STRICT_SCHEMA_VALIDATION}}

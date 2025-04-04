@@ -39,7 +39,7 @@ jobs:
         with:
           format: 'gcc'
           severity: 'warning'
-          scandir: '.'
+          scandir: '/.devcontainer/'
           ignore_paths: 'tests'
           additional_files: 'post_start_cli_autocomplete.sh'
 
@@ -47,8 +47,8 @@ jobs:
         run: |
           run: |
           ls
-          chmod +x tests/run_tests.sh
-          ./tests/run_tests.sh
+          chmod +x /.devcontainer/tests/run_tests.sh
+          ./.devcontainer/tests/run_tests.sh
           echo "Tests complete!"
 
       - name: Set up QEMU
@@ -68,8 +68,8 @@ jobs:
         run: |
           ls
           npm install npm install -g @devcontainers/cli
-          chmod +x tests/build_devcontainer-ci.sh
-          ./tests/build_devcontainer-ci.sh $CACHING_IMG $OCI_CACHING_IMG
+          chmod +x /.devcontainer/tests/build_devcontainer-ci.sh
+          /.devcontainer/tests/build_devcontainer-ci.sh $CACHING_IMG $OCI_CACHING_IMG
         env:
           CACHING_IMG: ${{ github.event.inputs.CACHING_IMG }}
           OCI_CACHING_IMG: ${{ github.event.inputs.OCI_CACHING_IMG }}
