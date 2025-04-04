@@ -20,11 +20,11 @@ source ~/.bashrc
 source ~/.zshrc
 
 # Stellar CLI Auto-Complete
-chmod 644 ~/.bashrc \
-                    && echo "source <(stellar completion --shell bash)" >> ~/.bashrc \
-                                                               && chmod 644 ~/.zshrc \
-                     && echo "source <(stellar completion --shell zsh)" >> ~/.zshrc \
-                                                             && echo "Enabled Stellar CLI auto-completion"
+chmod 644 ~/.bashrc && \
+  echo "source <(stellar completion --shell bash)" >>~/.bashrc && \
+  chmod 644 ~/.zshrc && \
+  echo "source <(stellar completion --shell zsh)" >>~/.zshrc && \
+  echo "Enabled Stellar CLI auto-completion"
 
 # Store exit status of the previous command
 result=$?

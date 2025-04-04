@@ -11,7 +11,7 @@ nc='\033[0m' # No Color
 find "$ContentRoot"$"/.devcontainer" -name "*_test.sh" -type f | while read -r test_script; do
   echo -e "${yellow}Running test: ${test_script}${nc}"
   chmod +x "$test_script"
-
+  
   if "$test_script"; then
     echo -e "${green}✓ Test passed: ${test_script}${nc}"
   else
