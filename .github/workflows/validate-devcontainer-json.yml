@@ -171,6 +171,7 @@ jobs:
 
       - name: Run Test on Devcontainer scripts
         run: |
+          chmod +x ${{github.workspace}}/.devcontainer/tests/run_tests.sh
           ${{github.workspace}}/.devcontainer/tests/run_tests.sh
           echo "Tests complete!"
 
