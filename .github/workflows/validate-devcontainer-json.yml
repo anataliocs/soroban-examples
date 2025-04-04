@@ -192,8 +192,8 @@ jobs:
 
       - name: Test build and push manual prebuild cache
         run: |
-          chmod +x ${{github.workspace}}/.devcontainer/build_devcontainer.sh
-          ${{github.workspace}}/.devcontainer/build_devcontainer.sh $CACHING_IMG $OCI_CACHING_IMG $env.LOCAL_CACHE
+          chmod +x ${{github.workspace}}/build_devcontainer.sh
+          ${{github.workspace}}/build_devcontainer.sh $CACHING_IMG $OCI_CACHING_IMG $env.LOCAL_CACHE
         env:
           CACHING_IMG: ${{ github.event.inputs.CACHING_IMG }}
           OCI_CACHING_IMG: ${{ github.event.inputs.OCI_CACHING_IMG }}
