@@ -164,7 +164,4 @@ jobs:
         working-directory: schemas/
         continue-on-error: ${{github.event.input.STRICT_SCHEMA_VALIDATION}}
 
-      - name: Warning about JSON Schema Validation Issues
-        if: ${{ failure() }}
-        run: |
           
