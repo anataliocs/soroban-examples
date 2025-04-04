@@ -38,7 +38,7 @@ output=$(devcontainer build \
 #--dotfiles-repository
 
 # Check the exit status and push pre-build
-if mycmd; then
+if [ "$output" ]; then
   echo " ✅ Devcontainer built successfully"
 
   # Extract imageName from JSON output using jq
