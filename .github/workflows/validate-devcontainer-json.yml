@@ -44,9 +44,6 @@ jobs:
           npm install -g npm
           npm install ajv-formats
           npm install ajv-errors
-          npm install -g flatten-this-folder
-          flatten .devcontainer
-          ls
 
       - name: Stage Schema Testing Area
         run: |
