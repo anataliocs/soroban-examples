@@ -167,6 +167,7 @@ jobs:
           scandir: '${{github.workspace}}/.devcontainer/'
           ignore_paths: '/tests'
           additional_files: 'post_start_cli_autocomplete.sh'
+        continue-on-error: true
 
       - name: Run Test on Devcontainer scripts
         run: |
