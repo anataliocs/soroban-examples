@@ -46,7 +46,7 @@ jobs:
         with:
           format: 'gcc'
           severity: 'warning'
-          scandir: '.devcontainer/'
+          scandir: '.'
           ignore_paths: 'tests'
           additional_files: 'post_start_cli_autocomplete.sh'
 
@@ -54,8 +54,8 @@ jobs:
         run: |
           run: |
           ls
-          chmod +x .devcontainer/tests/run_tests.sh
-          .devcontainer/tests/run_tests.sh
+          chmod +x tests/run_tests.sh
+          tests/run_tests.sh
           echo "Tests complete!"
 
       - name: Set up QEMU
@@ -74,8 +74,8 @@ jobs:
       - name: Test build and push manual prebuild cache
         run: |
           ls
-          chmod +x .devcontainer/tests/build_devcontainer_ci.sh
-          .devcontainer/tests/build_devcontainer_ci.sh $CACHING_IMG $OCI_CACHING_IMG
+          chmod +x tests/build_devcontainer_ci.sh
+          tests/build_devcontainer_ci.sh $CACHING_IMG $OCI_CACHING_IMG
         env:
           CACHING_IMG: ${{ github.event.inputs.CACHING_IMG }}
           OCI_CACHING_IMG: ${{ github.event.inputs.OCI_CACHING_IMG }}
