@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define devcontainer configuration directory
-devcontainer_dir=".devcontainer"
+devcontainer_dir="."
 
 # Define configuration file path
 config_file="devcontainer.json"

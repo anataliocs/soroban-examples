@@ -30,6 +30,7 @@ jobs:
           set-safe-directory: 'true'
           show-progress: 'true'
           sparse-checkout: './devcontainer/'
+                             './devcontainer/tests'
 
       - name: Shellcheck
         uses: ludeeus/action-shellcheck@master
@@ -39,10 +40,12 @@ jobs:
           scandir: '.'
           ignore_paths: 'tests'
           additional_files: 'post_start_cli_autocomplete.sh'
+        shell: bash
         continue-on-error: true
 
       - name: Run Test on Devcontainer scripts
         run: |
+          ls
           chmod +x tests/run_tests.sh
           ./tests/run_tests.sh
           echo "Tests complete!"
@@ -71,8 +74,8 @@ jobs:
         run: |
           ls
           npm install npm install -g @devcontainers/cli
-          chmod +x tests/build_devcontainer.sh
-          ./tests/build_devcontainer.sh $CACHING_IMG $OCI_CACHING_IMG
+          chmod +x tests/build_devcontainer-ci.sh
+          ./tests/build_devcontainer-ci.sh $CACHING_IMG $OCI_CACHING_IMG
         env:
           CACHING_IMG: ${{ github.event.inputs.CACHING_IMG }}
           OCI_CACHING_IMG: ${{ github.event.inputs.OCI_CACHING_IMG }}
