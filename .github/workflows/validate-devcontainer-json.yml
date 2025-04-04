@@ -26,6 +26,7 @@ jobs:
           clean: 'true'
           set-safe-directory: 'true'
           show-progress: 'true'
+          path: ${{github.workspace}}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4

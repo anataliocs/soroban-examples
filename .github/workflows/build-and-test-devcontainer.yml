@@ -28,6 +28,7 @@ jobs:
         with:
           clean: 'true'
           show-progress: 'true'
+          path: ${{github.workspace}}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -36,6 +37,7 @@ jobs:
       - run: |
           npm install npm install -g @devcontainers/cli
           npm install -g flatten-this-folder
+          echo "Flattening directory structure"
           flatten .devcontainer
           ls
 
