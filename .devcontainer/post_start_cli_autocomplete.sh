@@ -4,19 +4,18 @@ set -e
 # Add Brew and Stellar CLI to $PATH and terminals
 chmod 644 ~/.bashrc && chmod 644 ~/.zshrc
 chmod 644 ~/.profile && chmod 644 ~/.zprofile
-test -d /home/linuxbrew/.linuxbrew  && echo "/home/linuxbrew/.linuxbrew/bin/brew" >> ~/.zprofile
-test -d /home/linuxbrew/.linuxbrew && echo "/home/linuxbrew/.linuxbrew/bin/brew" >> ~/.zshrc
+test -d /usr/local/bin  && echo "/usr/local/bin" >> ~/.zprofile
+test -d /usr/local/bin && echo "/usr/local/bin" >> ~/.zshrc
 
-test -d /home/linuxbrew/.linuxbrew  && echo "/home/linuxbrew/.linuxbrew/bin/brew" >> ~/.profile
-test -d /home/linuxbrew/.linuxbrew && echo "/home/linuxbrew/.linuxbrew/bin/brew" >> ~/.bashrc
+test -d /usr/local/bin  && echo "/usr/local/bin" >> ~/.profile
+test -d /usr/local/bin && echo "/usr/local/bin" >> ~/.bashrc
 
-export PATH="/home/linuxbrew/.linuxbrew/bin/brew":$PATH
-echo "export PATH='/home/linuxbrew/.linuxbrew/bin:$PATH'" >> ~/.zshrc
-export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-echo "export PATH='/home/linuxbrew/.linuxbrew/bin:$PATH'" >> ~/.bashrc
-# shellcheck source=/Users/chris.anatalio/.bashrc
+export PATH="/usr/local/bin":$PATH
+echo "export PATH='/usr/local/bin:$PATH'" >> ~/.zshrc
+export PATH="/usr/local/bin:$PATH"
+echo "export PATH='/usr/local/bin:$PATH'" >> ~/.bashrc
+
 source ~/.bashrc
-# shellcheck source=/Users/chris.anatalio/.zshrc
 source ~/.zshrc
 
 # Stellar CLI Auto-Complete
