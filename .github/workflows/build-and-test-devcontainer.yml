@@ -51,12 +51,17 @@ jobs:
           scandir: "${{github.workspace}}/.devcontainer"
         continue-on-error: true
 
-      - name: Run tests
-        run: |
-          echo ::notice title={Running Tests}::{Testing devcontainer lifecycle scripts}
-          .devcontainer/tests/post_start_cli_autocomplete_test.sh
-          echo "### Tests Complete :rocket:" >> $GITHUB_STEP_SUMMARY
+      - name: Setup Bats and bats libs
+        id: setup-bats
+        uses: bats-core/bats-action@3.0.0
+        with:
+          assert-install: 'true'
+
+      - name: Test Devcontainer scripts
         shell: bash
+        env:
+          BATS_LIB_PATH: ${{ steps.setup-bats.outputs.lib-path }}
+        run: bats .devcontainer/post_start_cli_autocomplete_test.bats
 
 
   build-and-push-cache:

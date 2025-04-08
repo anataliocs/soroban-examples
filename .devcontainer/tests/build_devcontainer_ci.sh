@@ -32,7 +32,7 @@ fi
 output=$(devcontainer build \
   --workspace-folder . \
   --config $devcontainer_dir/$config_file \
-  --output type=image,name="${pre_build_image}:later")
+  --output type=image,name="${pre_build_image}")
 
 #--dotfiles-repository
 
@@ -56,7 +56,7 @@ fi
 oci_output=$(devcontainer build \
   --workspace-folder . \
   --config $devcontainer_dir/$config_file \
-  --output type=image,name="${oci_pre_build_image}:latest",mode=max,oci-mediatypes=true,compression=zstd)
+  --output type=image,name="${oci_pre_build_image}",mode=max,oci-mediatypes=true,compression=zstd)
 
 # Extract ociImageName from JSON output using jq
 oci_image_name=$(echo "$oci_output" | jq -r '.imageName[0]')

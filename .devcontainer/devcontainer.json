@@ -1,5 +1,5 @@
 {
-  "name": "Soroban Examples Dev Container(Debian Linux)",
+  "name": "Soroban Examples Devcontainer",
   "dockerFile": "Dockerfile",
   "context": "..",
   "remoteUser": "vscode",
@@ -9,7 +9,6 @@
 	  "chrisstellar/vsc-soroban-examples-95cce9-prebuild"
 	],
 	"args": {
-	  "DEBIAN_VERSION": "bullseye",
 	  "BUILDKIT_INLINE_CACHE": "1"
 	}
   },

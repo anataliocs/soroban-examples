@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euxo pipefail
 
 # Add Stellar CLI to $PATH
 chmod 644 ~/.bashrc && chmod 644 ~/.zshrc
@@ -19,12 +19,5 @@ chmod 644 ~/.zshrc
 echo "source <(stellar completion --shell zsh)" >>~/.zshrc
 echo "Enabled Stellar CLI auto-completion"
 
-# Store exit status of the previous command
-result=$?
+echo " ✅ postStartCliAutocomplete.sh executed successfully"
 
-# Check the exit status and provide informative output
-if [ $result -eq 0 ]; then
-  echo " ✅ postStartCliAutocomplete.sh executed successfully"
-else
-  echo " ❌ Error executing postStartCliAutocomplete.sh"
-fi
