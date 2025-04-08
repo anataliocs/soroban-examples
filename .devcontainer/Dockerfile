@@ -15,6 +15,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update && apt-get install -y \
   libdbus-1-dev \
   libudev-dev \
+  libssl3 \
   pkg-config \
   dbus \
   binaryen && apt-get clean && \

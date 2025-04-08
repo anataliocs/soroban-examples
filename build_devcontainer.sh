@@ -35,7 +35,7 @@ fi
 output=$(devcontainer build \
   --workspace-folder . \
   --config $devcontainer_dir/$config_file \
-  --cache-from "$pre_build_image":latest \
+  --cache-from type=image,name="${pre_build_image}:latest" \
   --cache-from type=local,src="${local_build_cache}",mode=max \
   --cache-to type=local,dest="${local_build_cache}",mode=max,oci-mediatypes=true,image-manifest=true \
   --output type=image,name="${pre_build_image}:latest")
@@ -69,7 +69,7 @@ fi
 oci_output=$(devcontainer build \
   --workspace-folder . \
   --config $devcontainer_dir/$config_file \
-  --cache-from "$pre_build_image":latest \
+  --cache-from type=image,name="${pre_build_image}:latest" \
   --cache-from "${oci_pre_build_image}:latest" \
   --cache-to type=registry,ref="${oci_pre_build_image}:latest",mode=max,oci-artifact=true \
   --output type=image,name="${oci_pre_build_image}:latest",mode=max,oci-mediatypes=true,compression=zstd)

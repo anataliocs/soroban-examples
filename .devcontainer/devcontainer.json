@@ -8,9 +8,6 @@
 	  "chrisstellar/vsc-soroban-examples-oci-prebuild",
 	  "chrisstellar/vsc-soroban-examples-95cce9-prebuild"
 	],
-	"options": [
-	  "--platform=linux/amd64"
-	],
 	"args": {
 	  "DEBIAN_VERSION": "bullseye",
 	  "BUILDKIT_INLINE_CACHE": "1"
@@ -48,7 +45,7 @@
 	},
 	"ghcr.io/devcontainers-extra/features/gh-release:1.0.25": {
 	  "repo": "stellar/stellar-cli",
-	  "binaryNames": "stellar-cli",
+	  "binaryNames": "stellar",
 	  "version": "22.6.0",
 	  "libName": "stellar",
 	  "binLocation": "/usr/local/bin",
