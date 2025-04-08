@@ -3,10 +3,6 @@
   "dockerFile": "Dockerfile",
   "context": "..",
   "build": {
-	"cacheFrom": [
-	  "chrisstellar/vsc-soroban-examples-oci-prebuild",
-	  "chrisstellar/vsc-soroban-examples-95cce9-prebuild"
-	],
 	"args": {
 	  "BUILDKIT_INLINE_CACHE": "1"
 	}
