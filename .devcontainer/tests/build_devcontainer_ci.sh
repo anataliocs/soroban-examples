@@ -19,12 +19,8 @@ output=$(devcontainer build \
 if [ "$output" ]; then
   echo " ✅ Devcontainer built successfully"
 
-  image_name=$(echo "$output" | jq -r '.imageName[0]')
-  echo " 🔹 Image name: ${image_name}"
-  docker inspect "${image_name}"
-
 else
-  echo " ❌ Error building devcontainer. Please check logs above."
+  echo " ❌ Error building devcontainer."
   exit 1
 fi
 
