@@ -38,7 +38,7 @@ output=$(devcontainer build \
   --cache-from "$pre_build_image":latest \
   --cache-from type=local,src="${local_build_cache}",mode=max \
   --cache-to type=local,dest="${local_build_cache}",mode=max,oci-mediatypes=true,image-manifest=true \
-  --output type=image,name="${pre_build_image}:later")
+  --output type=image,name="${pre_build_image}:latest")
 
 #--dotfiles-repository
 

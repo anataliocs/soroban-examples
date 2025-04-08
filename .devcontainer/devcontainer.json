@@ -49,7 +49,10 @@
 	"ghcr.io/devcontainers-extra/features/gh-release:1.0.25": {
 	  "repo": "stellar/stellar-cli",
 	  "binaryNames": "stellar-cli",
-	  "version": "22.6.0"
+	  "version": "22.6.0",
+	  "libName": "stellar",
+	  "binLocation": "/usr/local/bin",
+	  "libLocation": "/usr/local/lib"
 	},
 	"ghcr.io/rapidsai/devcontainers/features/sccache:25.6.1": {
 	  "repository": "mozilla/sccache",

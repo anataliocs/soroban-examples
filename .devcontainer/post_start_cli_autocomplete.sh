@@ -3,11 +3,8 @@ set -e
 
 # Add Brew and Stellar CLI to $PATH and terminals
 chmod 644 ~/.bashrc && chmod 644 ~/.zshrc
-chmod 644 ~/.profile && chmod 644 ~/.zprofile
-test -d /usr/local/bin  && echo "/usr/local/bin" >> ~/.zprofile
-test -d /usr/local/bin && echo "/usr/local/bin" >> ~/.zshrc
 
-test -d /usr/local/bin  && echo "/usr/local/bin" >> ~/.profile
+test -d /usr/local/bin && echo "/usr/local/bin" >> ~/.zshrc
 test -d /usr/local/bin && echo "/usr/local/bin" >> ~/.bashrc
 
 export PATH="/usr/local/bin":$PATH
