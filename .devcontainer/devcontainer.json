@@ -58,16 +58,11 @@
 	  "extensions": [
 		"rust-lang.rust-analyzer",
 		"vadimcn.vscode-lldb",
-		"tamasfe.even-better-toml",
-		"fill-labs.dependi",
+		"tamasfe.even-better-toml"
 	  ],
 	  "settings": {
 		"workbench.settings.editor": "json",
 		"npm.autoDetect": "off",
-		"dependi.rust.enabled": true,
-		"dependi.go.enabled": false,
-		"dependi.python.enabled": false,
-		"dependi.npm.enabled": false,
 		"telemetry.feedback.enabled": false,
 		"workbench.tips.enabled": false,
 		"editor.codeLens": false,
