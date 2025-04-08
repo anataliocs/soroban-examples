@@ -12,9 +12,6 @@ echo "export PATH='/usr/local/bin/:$PATH'" >> ~/.zshrc
 export PATH="/usr/local/bin/:$PATH"
 echo "export PATH='/usr/local/bin/:$PATH'" >> ~/.bashrc
 
-source ~/.bashrc
-source ~/.zshrc
-
 # Stellar CLI Auto-Complete
 chmod 644 ~/.bashrc
 echo "source <(stellar completion --shell bash)" >>~/.bashrc

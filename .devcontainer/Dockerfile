@@ -1,5 +1,5 @@
 # Use the official Rust image as a base
-FROM mcr.microsoft.com/devcontainers/rust:1.0.9-bullseye
+FROM mcr.microsoft.com/devcontainers/rust:1.0.9-1
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PKG_CONFIG_PATH='/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/share/pkgconfig' \
@@ -15,8 +15,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update && apt-get install -y \
   libdbus-1-dev \
   libudev-dev \
-  libssl3 \
   pkg-config \
+  openssl \
   dbus \
   binaryen && apt-get clean && \
   rm -rf /var/lib/apt/lists/*

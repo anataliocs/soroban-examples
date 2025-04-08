@@ -9,9 +9,6 @@
 **/dist
 **/pnpm-lock.yaml
 
-# Rust specific ignores
-Cargo.lock
-
 # Editor specific
 .idea/
 
