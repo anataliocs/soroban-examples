@@ -2,7 +2,6 @@
 FROM mcr.microsoft.com/devcontainers/rust:1.0.9-1
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    PKG_CONFIG_PATH='/usr/lib/pkgconfig:/usr/local/lib/pkgconfig:/usr/share/pkgconfig' \
     CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse \
     CARGO_INCREMENTAL=0 \
     SCCACHE_DIR=/home/vscode/.cache/sccache \
@@ -13,12 +12,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 # Enable Rust Bindings for Linux D-Bus interprocess communication(Required for Stellar CLI dependencies)
 RUN apt-get update && apt-get install -y \
-  libdbus-1-dev \
-  libudev-dev \
-  pkg-config \
-  openssl \
-  dbus \
-  binaryen && apt-get clean && \
+  openssl && apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
 USER vscode
