@@ -23,27 +23,8 @@ teardown() {
     run "${BATS_TMPDIR}/post_start_cli_autocomplete.sh"
 
     # Verify /usr/local/bin/ is appended to .bashrc and .zshrc files
-    assert_dir_exist "${BATS_TMPDIR}"
-
-    assert_file_exists "${BATS_TMPDIR}/.bashrc"
     assert_file_contains "${BATS_TMPDIR}/.bashrc" "/usr/local/bin/"
     assert_file_contains "${BATS_TMPDIR}/.zshrc" "/usr/local/bin/"
-
-    # Check script execution status is successful
-    assert_success
-
-    # Check for success message on script execution
-    assert_output --partial "✅ postStartCliAutocomplete.sh executed successfully"
-}
-
-@test "PATH and Stellar autocomplete" {
-    # Copy the script to the temporary directory
-    cp "$(dirname "$BATS_TEST_FILENAME")/post_start_cli_autocomplete.sh" "${BATS_TMPDIR}/"
-    chmod +x "${BATS_TMPDIR}/post_start_cli_autocomplete.sh"
-    # Set HOME to BATS_TMPDIR for the test
-    export HOME="${BATS_TMPDIR}"
-    # Run the script and capture its output
-    run "${BATS_TMPDIR}/post_start_cli_autocomplete.sh"
 
     # Verify env PATH export in .bashrc and .zshrc
     assert_file_contains "${BATS_TMPDIR}/.bashrc" $'export PATH=\'/usr/local/bin/'
@@ -52,4 +33,10 @@ teardown() {
     # Verify stellar CLI completion is included in .bashrc and .zshrc
     assert_file_contains "${BATS_TMPDIR}/.bashrc" "source <(stellar completion --shell bash)"
     assert_file_contains "${BATS_TMPDIR}/.zshrc" "source <(stellar completion --shell zsh)"
+
+    # Check script execution status is successful
+    assert_success
+
+    # Check for success message on script execution
+    assert_output --partial "✅ postStartCliAutocomplete.sh executed successfully"
 }

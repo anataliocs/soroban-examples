@@ -140,7 +140,7 @@ jobs:
             ajv.addSchema(require("./schemas/devContainerFeature.schema.json"), ${{env.DEVCONTAINER_FEATURE_SCHEMA}});
             ajv.addSchema(require("./schemas/devContainer.codespaces.schema.json"), ${{env.DEVCONTAINER_CODESPACES_SCHEMA}});
             ajv.addSchema(require("./schemas/devContainer.vscode.schema.json"), ${{env.DEVCONTAINER_VSCODE_SCHEMA}});
-            ajv.addSchema(require("./schemas/devContainer.vscode.machine.schema.json"), "vscode://schemas/settings/machine").com;
+            ajv.addSchema(require("./schemas/devContainer.vscode.machine.schema.json"), "vscode://schemas/settings/machine");
             let validator = ajv.compile(require("./schemas/devContainer.base.schema.json"), ${{env.DEVCONTAINER_BASE_SCHEMA}});
             
             const data = JSON.parse(fs.readFileSync(path.join(".", "schemas/devcontainer.json")));
