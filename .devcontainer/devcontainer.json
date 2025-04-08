@@ -2,7 +2,6 @@
   "name": "Soroban Examples Devcontainer",
   "dockerFile": "Dockerfile",
   "context": "..",
-  "remoteUser": "vscode",
   "build": {
 	"cacheFrom": [
 	  "chrisstellar/vsc-soroban-examples-oci-prebuild",
@@ -23,17 +22,11 @@
   ],
   "portsAttributes": {
 	"2222": {
-	  "onAutoForward": "notify",
-	  "label": "ssh",
-	  "requireLocalPort": true
+	  "label": "ssh"
 	},
 	"4226": {
 	  "label": "sccache"
 	}
-  },
-  "remoteEnv": {
-	"STELLAR_RPC_URL": "https://soroban-testnet.stellar.org",
-	"STELLAR_NETWORK_PASSPHRASE": "Test SDF Network ; September 2015"
   },
   "features": {
 	"ghcr.io/devcontainers/features/common-utils:2.5.3": {},
@@ -67,20 +60,21 @@
 		"vadimcn.vscode-lldb",
 		"tamasfe.even-better-toml",
 		"fill-labs.dependi",
-		"ms-vscode.makefile-tools"
 	  ],
 	  "settings": {
 		"workbench.settings.editor": "json",
 		"npm.autoDetect": "off",
-		"telemetry.enableTelemetry": false,
-		"rust-analyzer.check.command": "clippy",
-		"terminal.integrated.allowChords": true,
-		"terminal.integrated.copyOnSelection": true,
-		"terminal.integrated.commandsToSkipShell": [
-		  "-workbench.action.terminal.copySelection",
-		  "-workbench.action.terminal.paste",
-		  "-workbench.action.terminal.pasteSelection"
-		]
+		"dependi.rust.enabled": true,
+		"dependi.go.enabled": false,
+		"dependi.python.enabled": false,
+		"dependi.npm.enabled": false,
+		"telemetry.feedback.enabled": false,
+		"workbench.tips.enabled": false,
+		"editor.codeLens": false,
+		"editor.minimap.enabled": false,
+		"terminal.integrated.useWslProfiles": false,
+		"terminal.integrated.sendKeybindingsToShell": true,
+		"terminal.integrated.allowChords": true
 	  }
 	}
   },
