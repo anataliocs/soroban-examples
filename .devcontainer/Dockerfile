@@ -17,3 +17,6 @@ RUN apt-get update && apt-get install -y \
   pkg-config \
   openssl && apt-get clean && \
   rm -rf /var/lib/apt/lists/*
+
+RUN --mount=type=cache,target=/home/vscode/.cache/sccache \
+  make all
