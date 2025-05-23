@@ -9,11 +9,11 @@ on:
       - '.devcontainer/'
   workflow_dispatch:
     inputs:
-      DEFAULT_PREBUILD_IMG:
+      PREBUILD_IMG:
         description: 'Docker image'
         required: false
         default: 'vsc-soroban-examples-prebuild'
-      DEFAULT_OCI_IMG:
+      OCI_IMG:
         description: 'OCI image'
         required: false
         default: 'vsc-soroban-examples-oci'
@@ -60,6 +60,9 @@ jobs:
   build-docker:
     name: Devcontainer Build
     runs-on: ubuntu-latest
+    environment: devcontainer
+    env:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -74,11 +77,11 @@ jobs:
       - name: CLI Build
         run: |
           chmod +x ${{github.workspace}}/.devcontainer/tests/build_devcontainer_ci.sh
-          ${{github.workspace}}/.devcontainer/tests/build_devcontainer_ci.sh $DEFAULT_PREBUILD_IMG $DEFAULT_OCI_IMG
+          ${{github.workspace}}/.devcontainer/tests/build_devcontainer_ci.sh $PREBUILD $OCI
           
           echo "### Devcontainer CLI Build Successful!!! :rocket:" >> $GITHUB_STEP_SUMMARY
         env:
           BUILDKIT_INLINE_CACHE: 1
-          DEFAULT_PREBUILD_IMG: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.DEFAULT_PREBUILD_IMG }}
-          DEFAULT_OCI_IMG: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.DEFAULT_OCI_IMG }}
+          PREBUILD: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.PREBUILD_IMG }}
+          OCI: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.OCI_IMG }}
         working-directory: ${{github.workspace}}
