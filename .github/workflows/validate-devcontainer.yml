@@ -53,7 +53,7 @@ jobs:
           curl ${{env.CODESPACES_SCHEMA}} | jq ". + {\"\$id\": \"${{env.CODESPACES_SCHEMA}}\"}" > codespaces.schema.json
           curl ${{env.VSCODE_SCHEMA}} | jq ". + {\"\$id\": \"${{env.VSCODE_SCHEMA}}\"}" > vscode.schema.json
           curl ${{env.VSCODE_MACHINE_SCHEMA}} | jq ". + {\"\$id\": \"vscode://schemas/settings/machine\"}" > vscode.machine.schema.json
-          jq '.allOf[0] = {"$ref" : "${{env.SCHEMA}}"}' devContainer.schema.json > complete.schema.json
+          jq '.allOf[0] = {"$ref" : "${{env.SCHEMA}}"}' schema.json > complete.schema.json
           sed -i -e 's|json-schema.org/draft/2020-12/schema|${{env.S2019}}|g' base.schema.json
           sed -i -e 's|json-schema.org/draft-07/schema|${{env.S2019}}|g' feature.schema.json
           sed -i -e 's|json-schema.org/draft-07/schema|${{env.S2019}}|g' codespaces.schema.json
