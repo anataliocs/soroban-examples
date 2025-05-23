@@ -16,8 +16,7 @@ jobs:
       BASE_URL: https://raw.githubusercontent.com/devcontainers/spec/main/schemas/
       MS_URL: https://raw.githubusercontent.com/microsoft/vscode/main/extensions/configuration-editing/schemas/
       S2019: json-schema.org/draft/2019-09/schema
-      S09: json-schema-2019-09
-      S07: json-schema.org/draft-07/schema
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
@@ -46,10 +45,10 @@ jobs:
           curl ${{env.VSCODE_MACHINE_SCHEMA}} | jq ". + {\"\$id\": \"vscode://schemas/settings/machine\"}" > vscode.machine.schema.json
           jq '.allOf[0] = {"$ref" : "${{env.SCHEMA}}"}' schema.json > complete.schema.json
           sed -i -e 's|json-schema.org/draft/2020-12/schema|${{env.S2019}}|g' base.schema.json
-          sed -i -e 's|${{ env.S07 }}|${{ env.S2019 }}|g' feature.schema.json
-          sed -i -e 's|${{ env.S07 }}|${{ env.S2019 }}|g' codespaces.schema.json
-          sed -i -e 's|${{ env.S07 }}|${{ env.S2019 }}|g' vscode.schema.json
-          sed -i -e 's|${{ env.S07 }}|${{ env.S2019 }}|g' vscode.machine.schema.json
+          sed -i -e 's|json-schema.org/draft-07/schema|${{env.S2019}}|g' feature.schema.json
+          sed -i -e 's|json-schema.org/draft-07/schema|${{env.S2019}}|g' codespaces.schema.json
+          sed -i -e 's|json-schema.org/draft-07/schema|${{env.S2019}}|g' vscode.schema.json
+          sed -i -e 's|json-schema.org/draft-07/schema|${{env.S2019}}|g' vscode.machine.schema.json
         working-directory: schemas/
 
       - name: Validate Schema
@@ -57,20 +56,41 @@ jobs:
         with:
           script: |
             const Ajv2019 = require("ajv/dist/2019");
-            const meta = require("ajv/dist/refs/json-schema.org/draft-07/schema/meta/core");
+            const meta = require("ajv/dist/refs/json-schema-2019-09/meta/core");
+            const metaSchema = require("ajv/dist/refs/json-schema-2019-09/schema");
+            const metaValidation = require("ajv/dist/refs/json-schema-2019-09/meta/validation");
+            const metaMetaData = require("ajv/dist/refs/json-schema-2019-09/meta/meta-data");
+            const metaFormat = require("ajv/dist/refs/json-schema-2019-09/meta/format");
+            const metaContent = require("ajv/dist/refs/json-schema-2019-09/meta/content");
+            const metaApplicator = require("ajv/dist/refs/json-schema-2019-09/meta/applicator");
             
-            const path = require("path"); 
-            const fs = require('fs'); 
+            const path = require("path");
+            const fs = require('fs');
             const addFormats = require("ajv-formats");
             var ajv = new Ajv2019({
               strict: "None",
-              allowUnionTypes: true, allowMatchingProperties: true, allowAdditionalProperties: true,
-              allowAdditionalItems: true, allowEmptyObject: true, allowMultipleTypes: true,
-              inlineRefs: true, useDefaults: "empty", coerceTypes: true,
-              verbose: true, $data: true, validateSchema: "log", removeAdditional: "failing"
+              strictRequired: "log",
+              strictTuples: "log",
+              strictTypes: "log",
+              strictSchema: "log",
+              allowUnionTypes: true,
+              allowMatchingProperties: true,
+              allowAdditionalProperties: true,
+              allowAdditionalItems: true,
+              allowEmptyObject: true,
+              allowMultipleTypes: true,
+              inlineRefs: true,
+              useDefaults: "empty",
+              coerceTypes: true,
+              verbose: true,
+              $data: true,
+              validateSchema: "log",
+              removeAdditional: "failing"
             });
             let addKeywords = require("ajv-keywords/dist/definitions");
-            addFormats(ajv); addKeywords(ajv); ajv.addMetaSchema(meta, "http://${{env.S2019}}#", false);
+            addFormats(ajv);
+            addKeywords(ajv);
+            ajv.addMetaSchema(meta, "http://${{env.S2019}}#", false);
             
             ajv.addSchema(require("./schemas/complete.schema.json"), ${{env.SCHEMA}});
             ajv.addSchema(require("./schemas/feature.schema.json"), ${{env.FEATURE_SCHEMA}});
@@ -79,8 +99,11 @@ jobs:
             ajv.addSchema(require("./schemas/vscode.machine.schema.json"), "vscode://schemas/settings/machine");
             let validator = ajv.compile(require("./schemas/base.schema.json"), ${{env.BASE_SCHEMA}});
             
-            const data = JSON.parse(fs.readFileSync(path.join(".", "schemas/devcontainer.json")));            
-            if (!validator(data)) {
+            const data = JSON.parse(fs.readFileSync(path.join(".", "schemas/devcontainer.json")));
+            
+            if (validator(data)) {
+              console.log("devcontainer.json is fully validated"); 
+            } else {
               let error = validator.errors[0];
               console.error("Errors: " + validator.errors.length);
               console.error("Msg: " + error.message);
