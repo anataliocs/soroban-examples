@@ -41,10 +41,11 @@ dist
 Thumbs.db
 
 .env
-.devpod-internal
-build-devcontainer.sh
 z-dc-build-info/*
 devcontainer.md
 assets/
 .run/
 .zshrc
+LICENSE
+Makefile
+
