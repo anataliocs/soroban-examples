@@ -3,6 +3,7 @@ _tests_helper() {
     bats_load_library bats-support
     bats_load_library bats-assert
     bats_load_library bats-file
+    bats
 }
 
 _create_dir_file() {
