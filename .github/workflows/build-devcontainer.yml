@@ -39,7 +39,7 @@ jobs:
         with:
           node-version: '22.x'
       - run: |
-          npm config list -json | jq -r '.imageName[0]'
+          npm config list -json | jq -r '.globalconfig'
           npm install -g bats bats-support bats-assert bats-file
           bats .devcontainer/post_start_cli_autocomplete_test.bats
 
@@ -66,8 +66,8 @@ jobs:
       - name: Pre-build Devcontainer
         uses: devcontainers/ci@v0.3
         with:
-          imageName: chrisstellar/vsc-soroban-examples-prebuild
-          cacheFrom: chrisstellar/vsc-soroban-examples-prebuild
+          imageName: ${{env.username}}/vsc-soroban-examples-prebuild
+          cacheFrom: ${{env.username}}/vsc-soroban-examples-prebuild
           push: always
           checkoutPath: ${{ github.workspace }}
 
