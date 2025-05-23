@@ -1,0 +1,5 @@
+{
+  "name": "Soroban Account",
+  "dockerFile": "../Dockerfile",
+  "context": "..",
+}
