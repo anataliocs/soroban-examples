@@ -17,6 +17,7 @@ jobs:
       MS_URL: https://raw.githubusercontent.com/microsoft/vscode/main/extensions/configuration-editing/schemas/
       S2019: json-schema.org/draft/2019-09/schema
       S09: json-schema-2019-09
+      S07: json-schema.org/draft-07/schema
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
