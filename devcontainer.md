@@ -64,7 +64,7 @@ Run in your local VS Code IDE with Codespaces backend with all of your local set
 - Click `Create Codespace` button
 - Enter name of repository `stellar/soroban-examples`
 
-![img.png](assets/devcontainer-vscode-local.png)
+![img.png](img/devcontainer-vscode-local.png)
 
 ## Devcontainer Build Details
 
