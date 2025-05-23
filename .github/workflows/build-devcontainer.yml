@@ -37,15 +37,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
+          cache: pnpm
+          check-latest: 'true'
       - run: |
-          NPM_PREFIX=$(npm config list -json | jq -r '.prefix')
-          NPM_ROOT=$(npm root | echo)
+          NPM_PREFIX=$(pnpm config list -json | jq -r '.prefix')
+          NPM_ROOT=$(pnpm root | echo)
           export BATS_LIB_PATH=${BATS_LIB_PATH:-"${NPM_PREFIX}/lib/node_modules"}
           export BATS_LIB_PATH=${BATS_LIB_PATH:-"${NPM_ROOT}"}
           
-          npm i bats bats-support@0.2.0 bats-assert bats-file
-          npm root
-          npm exec bats .devcontainer/post_start_cli_autocomplete_test.bats
+          pnpm i bats bats-support bats-assert bats-file && pnpm update
+          pnpm exec bats .devcontainer/post_start_cli_autocomplete_test.bats
           ls -latr ${BATS_LIB_PATH}
 
   prebuild:
