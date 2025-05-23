@@ -58,7 +58,6 @@ jobs:
         uses: docker/setup-qemu-action@v3.6.0
         with:
           cache-image: 'true'
-          image: 'docker.io/${{env.username}}/${{ env.prebuild }}'
       - name: Setup Docker buildx for multi-architecture builds
         uses: docker/setup-buildx-action@v3.10.0
         env:
