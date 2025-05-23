@@ -39,8 +39,8 @@ jobs:
       - run: |
           NPM_PREFIX=$(npm config list -json | jq -r '.prefix')
           export BATS_LIB_PATH=${BATS_LIB_PATH:-"${NPM_PREFIX}/lib/node_modules"}
-          npm install -g bats bats-support bats-assert bats-file
-          bats .devcontainer/post_start_cli_autocomplete_test.bats
+          npm ci -g bats bats-support bats-assert bats-file
+          npm exec bats .devcontainer/post_start_cli_autocomplete_test.bats
           ls -latr ${BATS_LIB_PATH}
 
   login:
