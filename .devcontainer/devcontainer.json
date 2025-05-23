@@ -84,7 +84,7 @@
   "postCreateCommand": "",
   "postStartCommand": "",
   "postAttachCommand": {
-	"stellar-account": "stellar keys generate --global alice --network testnet --fund && stellar keys use alice && stellar keys address alice",
+	"stellar-account": ".devcontainer/pa_stellar_accounts.sh",
 	"welcome-text": ".devcontainer/pa_welcome_text.sh"
   },
   "waitFor": "postStartCommand"
