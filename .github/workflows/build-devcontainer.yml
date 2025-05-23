@@ -37,7 +37,7 @@ jobs:
         with:
           node-version: '22.x'
       - run: |
-          npm -g bats
+          npm install -g bats
           bats .devcontainer/post_start_cli_autocomplete_test.bats
         working-directory: ${{ github.workspace }}
 
@@ -72,14 +72,10 @@ jobs:
         with:
           node-version: '22.x'
       - run: npm install -g @devcontainers/cli
-        working-directory: ${{ github.workspace }}
 
       - name: CLI Build
         run: |
-          chmod +x ${{github.workspace}}/.devcontainer/tests/build_devcontainer_ci.sh
           ${{github.workspace}}/.devcontainer/tests/build_devcontainer_ci.sh $PREBUILD $OCI
-          
-          echo "### Devcontainer CLI Build Successful!!! :rocket:" >> $GITHUB_STEP_SUMMARY
         env:
           BUILDKIT_INLINE_CACHE: 1
           PREBUILD: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.PREBUILD_IMG }}
