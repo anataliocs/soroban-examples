@@ -39,7 +39,7 @@ jobs:
         with:
           node-version: '22.x'
       - run: |
-          npm config list -l 
+          npm config list -json | jq -r '.imageName[0]'
           npm install -g bats bats-support bats-assert bats-file
           bats .devcontainer/post_start_cli_autocomplete_test.bats
 
@@ -68,7 +68,6 @@ jobs:
         with:
           imageName: chrisstellar/vsc-soroban-examples-prebuild
           cacheFrom: chrisstellar/vsc-soroban-examples-prebuild
-          cacheTo: chrisstellar/vsc-soroban-examples-prebuild
           push: always
           checkoutPath: ${{ github.workspace }}
 
