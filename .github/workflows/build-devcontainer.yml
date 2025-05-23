@@ -14,7 +14,6 @@ on:
         required: false
         default: 'vsc-soroban-examples-prebuild'
 
-
 jobs:
   verify-scripts:
     name: Shellcheck
@@ -40,15 +39,13 @@ jobs:
         with:
           node-version: '22.x'
       - run: |
-          npm config list -l
+          npm config list -l 
           npm install -g bats bats-support bats-assert bats-file
           bats .devcontainer/post_start_cli_autocomplete_test.bats
-        working-directory: ${{ github.workspace }}
 
   login:
     name: Docker Login
     runs-on: ubuntu-latest
-
     environment: devcontainer
     env:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -65,7 +62,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           clean: 'true'
-          path: ${{ github.workspace }}
+          path: '.'
       - name: Pre-build Devcontainer
         uses: devcontainers/ci@v0.3
         with:
@@ -73,7 +70,7 @@ jobs:
           cacheFrom: chrisstellar/vsc-soroban-examples-prebuild
           cacheTo: chrisstellar/vsc-soroban-examples-prebuild
           push: always
-          subFolder: '.devcontainer'
+          subFolder: '/.devcontainer/'
           checkoutPath: ${{ github.workspace }}
 
 
