@@ -57,7 +57,6 @@ jobs:
       - name: Set up QEMU for multi-architecture builds
         uses: docker/setup-qemu-action@v3.6.0
         with:
-          platforms: 'all'
           cache-image: 'true'
           image: 'docker.io/${{env.username}}/${{ env.prebuild }}'
       - name: Setup Docker buildx for multi-architecture builds
