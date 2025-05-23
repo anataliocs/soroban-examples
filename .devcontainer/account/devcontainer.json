@@ -1,5 +1,6 @@
 {
   "name": "Soroban Account",
-  "dockerFile": "../Dockerfile",
-  "context": "..",
+  image: "chrisstellar/vsc-soroban-examples-prebuild",
+  "workspaceFolder": "${containerWorkspaceFolder}/account",
+  runArgs: []
 }
