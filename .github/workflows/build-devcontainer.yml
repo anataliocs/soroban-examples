@@ -60,11 +60,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           ecr: 'false'
           logout: 'false'
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          cache-image: 'true'
-          platforms: 'all'
+
       - name: Pre-build dev container image
         uses: devcontainers/ci@v0.3
         with:
@@ -73,4 +69,5 @@ jobs:
           cacheTo: chrisstellar/vsc-soroban-examples-prebuild
           push: always
           configFile: './.devcontainer/devcontainer.json'
+
 
