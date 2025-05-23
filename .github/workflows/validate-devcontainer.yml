@@ -17,7 +17,6 @@ jobs:
       MS_URL: https://raw.githubusercontent.com/microsoft/vscode/main/extensions/configuration-editing/schemas/
       S2019: json-schema.org/draft/2019-09/schema
       S09: json-schema-2019-09
-      S07: json-schema.org/draft-07/schema
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
@@ -46,10 +45,10 @@ jobs:
           curl ${{env.VSCODE_MACHINE_SCHEMA}} | jq ". + {\"\$id\": \"vscode://schemas/settings/machine\"}" > vscode.machine.schema.json
           jq '.allOf[0] = {"$ref" : "${{env.SCHEMA}}"}' schema.json > complete.schema.json
           sed -i -e 's|json-schema.org/draft/2020-12/schema|${{env.S2019}}|g' base.schema.json
-          sed -i -e 's|${{env.S07}}|${{env.S2019}}|g' feature.schema.json
-          sed -i -e 's|${{env.S07}}|${{env.S2019}}|g' codespaces.schema.json
-          sed -i -e 's|${{env.S07}}|${{env.S2019}}|g' vscode.schema.json
-          sed -i -e 's|${{env.S07}}|${{env.S2019}}|g' vscode.machine.schema.json
+          sed -i -e 's|${{ env.S07 }}|${{ env.S2019 }}|g' feature.schema.json
+          sed -i -e 's|${{ env.S07 }}|${{ env.S2019 }}|g' codespaces.schema.json
+          sed -i -e 's|${{ env.S07 }}|${{ env.S2019 }}|g' vscode.schema.json
+          sed -i -e 's|${{ env.S07 }}|${{ env.S2019 }}|g' vscode.machine.schema.json
         working-directory: schemas/
 
       - name: Validate Schema
@@ -57,7 +56,7 @@ jobs:
         with:
           script: |
             const Ajv2019 = require("ajv/dist/2019");
-            const meta = require("ajv/dist/refs/${{env.S07}}/meta/core");
+            const meta = require("ajv/dist/refs/json-schema.org/draft-07/schema/meta/core");
             
             const path = require("path"); 
             const fs = require('fs'); 
