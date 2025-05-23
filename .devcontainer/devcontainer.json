@@ -2,7 +2,7 @@
   "name": "Soroban Examples",
   "dockerFile": "Dockerfile",
   "context": "..",
-  containerEnv: {
+  "containerEnv": {
 	"REGISTRY": "docker.io",
 	"REGISTRY-OWNER": "stellar",
 	"PREBUILD_IMG": "vsc-soroban-examples-prebuild"
@@ -101,7 +101,8 @@
   "postStartCommand": ".devcontainer/ps_autocomplete.sh",
   "postAttachCommand": {
 	"stellar-account": ".devcontainer/pa_stellar_accounts.sh",
-	"welcome-text": ".devcontainer/pa_welcome_text.sh"
+	"welcome": ".devcontainer/pa_welcome.sh"
   },
-  "waitFor": "postStartCommand"
+  "waitFor": "postStartCommand",
+  init: false
 }
