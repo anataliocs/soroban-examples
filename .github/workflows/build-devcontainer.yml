@@ -70,7 +70,6 @@ jobs:
           cacheFrom: chrisstellar/vsc-soroban-examples-prebuild
           cacheTo: chrisstellar/vsc-soroban-examples-prebuild
           push: always
-          subFolder: '/.devcontainer/'
           checkoutPath: ${{ github.workspace }}
 
 
