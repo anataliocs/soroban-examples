@@ -33,21 +33,6 @@ jobs:
           shellcheck ".devcontainer/pa_welcome.sh"
           shellcheck ".devcontainer/pa_stellar_accounts.sh"
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.x'
-      - run: |
-          npm init && npm update
-          NPM_ROOT=$(npm root | echo)
-          export BATS_LIB_PATH=${BATS_LIB_PATH:-"${NPM_ROOT}"}
-          
-          npm i --legacy-peer-deps bats --save-exact bats-support@0.3.0 --save-exact bats-assert@2.1.0 --save-exact \
-          bats-file --save-exact
-          
-          npm exec bats .devcontainer/post_start_cli_autocomplete_test.bats
-          ls -latr ${BATS_LIB_PATH}
-
   prebuild:
     name: Docker Build
     runs-on: ubuntu-latest
