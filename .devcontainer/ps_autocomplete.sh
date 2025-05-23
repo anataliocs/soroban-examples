@@ -18,5 +18,4 @@ echo "Enabled Stellar CLI auto-completion"
 
 echo " ✅ postStartCliAutocomplete.sh executed successfully"
 
-make
 

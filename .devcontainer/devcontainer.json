@@ -83,6 +83,9 @@
   "updateContentCommand": ".devcontainer/ps_autocomplete.sh",
   "postCreateCommand": "",
   "postStartCommand": "",
-  "postAttachCommand": ".devcontainer/pa_welcome_text.sh",
+  "postAttachCommand": {
+	"stellar-account": "stellar keys generate --global alice --network testnet --fund && stellar keys use alice && stellar keys address alice",
+	"welcome-text": ".devcontainer/pa_welcome_text.sh"
+  },
   "waitFor": "postStartCommand"
 }
