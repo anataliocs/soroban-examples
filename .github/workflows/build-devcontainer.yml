@@ -35,12 +35,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         env:
-          BATS_LIB_PATH: ../node_modules/
+          BATS_LIB_PATH: NODE_PATH
         with:
           node-version: '22.x'
       - run: |
+          echo NODE_PATH > $BATS_LIB_PATH
+          ls -latr
           npm install -g bats bats-support bats-assert bats-file
-          npx bats .devcontainer/post_start_cli_autocomplete_test.bats
+          bats .devcontainer/post_start_cli_autocomplete_test.bats
         working-directory: ${{ github.workspace }}
 
   login:
@@ -60,6 +62,9 @@ jobs:
           logout: 'false'
 
   build-docker:
+    permissions:
+      packages: write
+      contents: write
     name: Devcontainer Build
     runs-on: ubuntu-latest
     environment: devcontainer
@@ -80,6 +85,6 @@ jobs:
           ${{github.workspace}}/.devcontainer/tests/build_devcontainer_ci.sh $PREBUILD $OCI
         env:
           BUILDKIT_INLINE_CACHE: 1
-          PREBUILD: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.PREBUILD_IMG }}
-          OCI: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.OCI_IMG }}
+          PREBUILD: ${{ env.username }}/${{ github.event.inputs.PREBUILD_IMG }}
+          OCI: ${{ env.username }}/${{ github.event.inputs.OCI_IMG }}
         working-directory: ${{github.workspace}}
