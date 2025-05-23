@@ -17,5 +17,3 @@ echo "     cargo test     ⭐️ make"
 echo ""
 echo "  📖 Stellar CLI Manual(cmd+click) 🔗 https://developers.stellar.org/docs/tools/cli/stellar-cli"
 echo "  👩‍🔬 Stellar Lab(cmd+click) 🔗 https://lab.stellar.org/"
-
-
