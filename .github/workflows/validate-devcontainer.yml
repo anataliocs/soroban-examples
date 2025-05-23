@@ -15,7 +15,7 @@ jobs:
     env:
       BASE_URL: https://raw.githubusercontent.com/devcontainers/spec/main/schemas/
       MS_URL: https://raw.githubusercontent.com/microsoft/vscode/main/extensions/configuration-editing/schemas/
-      2019_SCHEMA: json-schema.org/draft/2019-09/schema
+      S2019: json-schema.org/draft/2019-09/schema
 
     steps:
       - name: Checkout code
@@ -54,11 +54,11 @@ jobs:
           curl ${{env.VSCODE_SCHEMA}} | jq ". + {\"\$id\": \"${{env.VSCODE_SCHEMA}}\"}" > devContainer.vscode.schema.json
           curl ${{env.VSCODE_MACHINE_SCHEMA}} | jq ". + {\"\$id\": \"vscode://schemas/settings/machine\"}" > devContainer.vscode.machine.schema.json
           jq '.allOf[0] = {"$ref" : "${{env.SCHEMA}}"}' devContainer.schema.json > devContainer.complete.schema.json
-          sed -i -e 's|json-schema.org/draft/2020-12/schema|${{2019_SCHEMA}}|g' devContainer.base.schema.json
-          sed -i -e 's|json-schema.org/draft-07/schema|${{2019_SCHEMA}}|g' devContainerFeature.schema.json
-          sed -i -e 's|json-schema.org/draft-07/schema|${{2019_SCHEMA}}|g' devContainer.codespaces.schema.json
-          sed -i -e 's|json-schema.org/draft-07/schema|${{2019_SCHEMA}}|g' devContainer.vscode.schema.json
-          sed -i -e 's|json-schema.org/draft-07/schema|${{2019_SCHEMA}}|g' devContainer.vscode.machine.schema.json
+          sed -i -e 's|json-schema.org/draft/2020-12/schema|${{env.S2019}}|g' devContainer.base.schema.json
+          sed -i -e 's|json-schema.org/draft-07/schema|${{env.S2019}}|g' devContainerFeature.schema.json
+          sed -i -e 's|json-schema.org/draft-07/schema|${{env.S2019}}|g' devContainer.codespaces.schema.json
+          sed -i -e 's|json-schema.org/draft-07/schema|${{env.S2019}}|g' devContainer.vscode.schema.json
+          sed -i -e 's|json-schema.org/draft-07/schema|${{env.S2019}}|g' devContainer.vscode.machine.schema.json
         working-directory: schemas/
 
       - name: Validate Schema
