@@ -34,7 +34,7 @@
 	  "binaryNames": "stellar",
 	  "version": "22.6.0"
 	},
-	"ghcr.io/rapidsai/devcontainers/features/sccache:25.6.1": {
+	"ghcr.io/rapidsai/devcontainers/features/sccache:25.8.0": {
 	  "repository": "mozilla/sccache",
 	  "version": "0.10.0"
 	}
@@ -51,7 +51,6 @@
 	"vscode": {
 	  "extensions": [
 		"rust-lang.rust-analyzer",
-		"vadimcn.vscode-lldb",
 		"tamasfe.even-better-toml"
 	  ],
 	  "settings": {
@@ -62,7 +61,6 @@
 		"workbench.tips.enabled": false,
 		"editor.codeLens": false,
 		"editor.minimap.enabled": false,
-		"terminal.integrated.useWslProfiles": false,
 		"terminal.integrated.sendKeybindingsToShell": true,
 		"terminal.integrated.allowChords": true,
 		"rust-analyzer.check.allTargets": false,
@@ -78,9 +76,10 @@
 	}
   },
   "initializeCommand": "",
-  "onCreateCommand": "chmod +x .devcontainer/post_start_cli_autocomplete.sh && chmod +x .devcontainer/post_attach_welcome_text.sh",
+  "onCreateCommand": "chmod -R +x .devcontainer/",
   "updateContentCommand": "",
   "postCreateCommand": "",
   "postStartCommand": ".devcontainer/post_start_cli_autocomplete.sh",
-  "postAttachCommand": ".devcontainer/post_attach_welcome_text.sh"
+  "postAttachCommand": ".devcontainer/post_attach_welcome_text.sh",
+  "waitFor": "postStartCommand"
 }

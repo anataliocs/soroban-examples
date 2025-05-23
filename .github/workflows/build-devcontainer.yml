@@ -63,6 +63,13 @@ jobs:
         with:
           clean: 'true'
           path: '.'
+      - name: Set up QEMU for multi-architecture builds
+        uses: docker/setup-qemu-action@v3
+      - name: Setup Docker buildx for multi-architecture builds
+        uses: docker/setup-buildx-action@v3
+        with:
+          use: true
+          cache-binary: 'true'
       - name: Pre-build Devcontainer
         uses: devcontainers/ci@v0.3
         with:
@@ -70,5 +77,6 @@ jobs:
           cacheFrom: ${{env.username}}/vsc-soroban-examples-prebuild
           push: always
           checkoutPath: ${{ github.workspace }}
+          platform: linux/amd64,linux/arm64
 
 

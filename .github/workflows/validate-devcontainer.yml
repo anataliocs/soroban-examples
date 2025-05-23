@@ -20,23 +20,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '22.x'
       - run: |
-          npm install ajv
-          npm install json-merge-patch --save
-          npm install ajv-keywords
-          npm install ajv-merge-patch --save
-          npm install ajv-formats
-          npm install ajv-errors
+          npm i ajv json-merge-patch ajv-keywords ajv-merge-patch ajv-formats ajv-errors
 
       - name: Stage Testing Area
         run: |
-          mkdir -p schemas/
-          cp "${{github.workspace}}/.devcontainer/devcontainer.json" schemas/
+          mkdir -p schemas/ && cp "${{github.workspace}}/.devcontainer/devcontainer.json" schemas/
 
       - name: Devcontainer Schemas
         env:
@@ -117,7 +110,6 @@ jobs:
               let error = validator.errors[0];
               console.error("Msg: " + error.message);
               console.error("Keyword: " + error.keyword);
-              console.error("Error Schema: " + error.schema);
               console.error("Schema name: " + error.parentSchema.$id);
             }
         continue-on-error: true
