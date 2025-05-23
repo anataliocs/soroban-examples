@@ -72,5 +72,5 @@ jobs:
           cacheFrom: chrisstellar/vsc-soroban-examples-prebuild
           cacheTo: chrisstellar/vsc-soroban-examples-prebuild
           push: always
-          configFile: '${{github.workspace}}/.devcontainer/devcontainer.json'
+          configFile: '/.devcontainer/devcontainer.json'
 
