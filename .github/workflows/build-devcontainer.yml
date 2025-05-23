@@ -38,12 +38,13 @@ jobs:
         with:
           check-latest: 'true'
           node-version: '22.x'
+          cache: npm
       - run: |
-          npm cache clean --force && npm init && npm update
+          npm init && npm update
           NPM_ROOT=$(npm root | echo)
           export BATS_LIB_PATH=${BATS_LIB_PATH:-"${NPM_ROOT}"}
           
-          npm i --force bats --save-exact bats-support@0.3.0 --save-exact bats-assert --save-exact \
+          npm i --legacy-peer-deps bats --save-exact bats-support@0.3.0 --save-exact bats-assert --save-exact \
           bats-file --save-exact
           
           npm exec bats .devcontainer/post_start_cli_autocomplete_test.bats
