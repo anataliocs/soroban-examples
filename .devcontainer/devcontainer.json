@@ -96,6 +96,5 @@
 	"stellar-account": ".devcontainer/pa_stellar_accounts.sh",
 	"welcome": ".devcontainer/pa_welcome.sh"
   },
-  "waitFor": "postStartCommand",
-  init: false
+  "waitFor": "postStartCommand"
 }
