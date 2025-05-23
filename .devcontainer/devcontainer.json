@@ -1,5 +1,5 @@
 {
-  "name": "Soroban Examples Devcontainer",
+  "name": "Soroban Examples",
   "dockerFile": "Dockerfile",
   "context": "..",
   "build": {

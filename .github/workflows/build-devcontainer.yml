@@ -13,10 +13,6 @@ on:
         description: 'Docker image'
         required: false
         default: 'vsc-soroban-examples-prebuild'
-      OCI_IMG:
-        description: 'OCI image'
-        required: false
-        default: 'vsc-soroban-examples-oci'
 
 jobs:
   verify-scripts:
@@ -39,7 +35,7 @@ jobs:
         with:
           node-version: '22.x'
       - run: |
-          echo NODE_PATH > $BATS_LIB_PATH
+          echo "export NODE_PATH='/usr/local/bin/:$NODE_PATH'" >> $NODE_PATH
           ls -latr
           npm install -g bats bats-support bats-assert bats-file
           bats .devcontainer/post_start_cli_autocomplete_test.bats
@@ -60,31 +56,16 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           ecr: 'false'
           logout: 'false'
-
-  build-docker:
-    permissions:
-      packages: write
-      contents: write
-    name: Devcontainer Build
-    runs-on: ubuntu-latest
-    environment: devcontainer
-    env:
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
         with:
-          node-version: '22.x'
-      - run: npm install -g @devcontainers/cli
+          cache-image: 'true'
+          platforms: 'all'
+      - name: Pre-build dev container image
+        uses: devcontainers/ci@v0.3
+        with:
+          imageName: chrisstellar/vsc-soroban-examples-prebuild
+          cacheFrom: chrisstellar/vsc-soroban-examples-prebuild
+          cacheTo: chrisstellar/vsc-soroban-examples-prebuild
+          push: always
 
-      - name: CLI Build
-        run: |
-          ${{github.workspace}}/.devcontainer/tests/build_devcontainer_ci.sh $PREBUILD $OCI
-        env:
-          BUILDKIT_INLINE_CACHE: 1
-          PREBUILD: ${{ env.username }}/${{ github.event.inputs.PREBUILD_IMG }}
-          OCI: ${{ env.username }}/${{ github.event.inputs.OCI_IMG }}
-        working-directory: ${{github.workspace}}
