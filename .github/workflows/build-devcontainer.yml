@@ -67,7 +67,6 @@ jobs:
           USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         with:
-          username: $USERNAME
           password: $TOKEN
           ecr: 'false'
 

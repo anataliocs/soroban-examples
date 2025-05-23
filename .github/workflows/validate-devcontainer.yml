@@ -12,6 +12,10 @@ on:
 jobs:
   validate-json:
     runs-on: ubuntu-latest
+    env:
+      BASE_URL: https://raw.githubusercontent.com/devcontainers/spec/main/schemas/
+      MS_URL: https://raw.githubusercontent.com/microsoft/vscode/main/extensions/configuration-editing/schemas/
+      2019_SCHEMA: json-schema.org/draft/2019-09/schema
 
     steps:
       - name: Checkout code
@@ -34,32 +38,30 @@ jobs:
           mkdir -p schemas/
           cp "${{github.workspace}}/.devcontainer/devcontainer.json" schemas/
 
-      - name: DevContainer Schemas
+      - name: Devcontainer Schemas
         env:
-          DEVCONTAINER_BASE_SCHEMA: https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.base.schema.json
-          DEVCONTAINER_SCHEMA: https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json
-          DEVCONTAINER_FEATURE_SCHEMA: https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainerFeature.schema.json
-          DEVCONTAINER_CODESPACES_SCHEMA: https://raw.githubusercontent.com/microsoft/vscode/main/extensions/configuration-editing/schemas/devContainer.codespaces.schema.json
-          DEVCONTAINER_VSCODE_SCHEMA: https://raw.githubusercontent.com/microsoft/vscode/main/extensions/configuration-editing/schemas/devContainer.vscode.schema.json
+          BASE_SCHEMA: ${{env.BASE_URL}}devContainer.base.schema.json
+          SCHEMA: ${{env.BASE_URL}}devContainer.schema.json
+          FEATURE_SCHEMA: ${{env.BASE_URL}}devContainerFeature.schema.json
+          CODESPACES_SCHEMA: ${{env.MS_URL}}devContainer.codespaces.schema.json
+          VSCODE_SCHEMA: ${{env.MS_URL}}devContainer.vscode.schema.json
           VSCODE_MACHINE_SCHEMA: https://raw.githubusercontent.com/microsoft/vscode/refs/heads/main/extensions/configuration-editing/schemas/devContainer.vscode.schema.json
-          VSCODE_MACHINE_SCHEMA_REF: vscode://schemas/settings/machine
         run: |
-          curl ${{env.DEVCONTAINER_BASE_SCHEMA}} | jq ". + {\"\$id\": \"${{env.DEVCONTAINER_BASE_SCHEMA}}\"}" > devContainer.base.schema.json
-          curl ${{env.DEVCONTAINER_SCHEMA}} | jq ". + {\"\$id\": \"${{env.DEVCONTAINER_SCHEMA}}\"}" > devContainer.schema.json
-          curl ${{env.DEVCONTAINER_FEATURE_SCHEMA}} | jq ". + {\"\$id\": \"${{env.DEVCONTAINER_FEATURE_SCHEMA}}\"}" > devContainerFeature.schema.json
-          curl ${{env.DEVCONTAINER_CODESPACES_SCHEMA}} | jq ". + {\"\$id\": \"${{env.DEVCONTAINER_CODESPACES_SCHEMA}}\"}" > devContainer.codespaces.schema.json
-          curl ${{env.DEVCONTAINER_VSCODE_SCHEMA}} | jq ". + {\"\$id\": \"${{env.DEVCONTAINER_VSCODE_SCHEMA}}\"}" > devContainer.vscode.schema.json
-          curl ${{env.VSCODE_MACHINE_SCHEMA}} | jq ". + {\"\$id\": \"${{env.VSCODE_MACHINE_SCHEMA_REF}}\"}" > devContainer.vscode.machine.schema.json
-          
-          jq '.allOf[0] = {"$ref" : "${{env.DEVCONTAINER_SCHEMA}}"}' devContainer.schema.json > devContainer.complete.schema.json
-          sed -i -e 's|json-schema.org/draft/2020-12/schema|json-schema.org/draft/2019-09/schema|g' devContainer.base.schema.json
-          sed -i -e 's|json-schema.org/draft-07/schema|json-schema.org/draft/2019-09/schema|g' devContainerFeature.schema.json
-          sed -i -e 's|json-schema.org/draft-07/schema|json-schema.org/draft/2019-09/schema|g' devContainer.codespaces.schema.json
-          sed -i -e 's|json-schema.org/draft-07/schema|json-schema.org/draft/2019-09/schema|g' devContainer.vscode.schema.json
-          sed -i -e 's|json-schema.org/draft-07/schema|json-schema.org/draft/2019-09/schema|g' devContainer.vscode.machine.schema.json
+          curl ${{env.BASE_SCHEMA}} | jq ". + {\"\$id\": \"${{env.BASE_SCHEMA}}\"}" > devContainer.base.schema.json
+          curl ${{env.SCHEMA}} | jq ". + {\"\$id\": \"${{env.SCHEMA}}\"}" > devContainer.schema.json
+          curl ${{env.FEATURE_SCHEMA}} | jq ". + {\"\$id\": \"${{env.FEATURE_SCHEMA}}\"}" > devContainerFeature.schema.json
+          curl ${{env.CODESPACES_SCHEMA}} | jq ". + {\"\$id\": \"${{env.CODESPACES_SCHEMA}}\"}" > devContainer.codespaces.schema.json
+          curl ${{env.VSCODE_SCHEMA}} | jq ". + {\"\$id\": \"${{env.VSCODE_SCHEMA}}\"}" > devContainer.vscode.schema.json
+          curl ${{env.VSCODE_MACHINE_SCHEMA}} | jq ". + {\"\$id\": \"vscode://schemas/settings/machine\"}" > devContainer.vscode.machine.schema.json
+          jq '.allOf[0] = {"$ref" : "${{env.SCHEMA}}"}' devContainer.schema.json > devContainer.complete.schema.json
+          sed -i -e 's|json-schema.org/draft/2020-12/schema|${{2019_SCHEMA}}|g' devContainer.base.schema.json
+          sed -i -e 's|json-schema.org/draft-07/schema|${{2019_SCHEMA}}|g' devContainerFeature.schema.json
+          sed -i -e 's|json-schema.org/draft-07/schema|${{2019_SCHEMA}}|g' devContainer.codespaces.schema.json
+          sed -i -e 's|json-schema.org/draft-07/schema|${{2019_SCHEMA}}|g' devContainer.vscode.schema.json
+          sed -i -e 's|json-schema.org/draft-07/schema|${{2019_SCHEMA}}|g' devContainer.vscode.machine.schema.json
         working-directory: schemas/
 
-      - name: Validate Devcontainer JSON Schema
+      - name: Validate Schema
         uses: actions/github-script@v7
         with:
           script: |
@@ -98,14 +100,14 @@ jobs:
             let addKeywords = require("ajv-keywords/dist/definitions");
             addFormats(ajv);
             addKeywords(ajv);
-            ajv.addMetaSchema(meta, "http://json-schema.org/draft/2019-09/schema#", false);
+            ajv.addMetaSchema(meta, "http://$${{2019_SCHEMA}}#", false);
             
-            ajv.addSchema(require("./schemas/devContainer.complete.schema.json"), ${{env.DEVCONTAINER_SCHEMA}});
-            ajv.addSchema(require("./schemas/devContainerFeature.schema.json"), ${{env.DEVCONTAINER_FEATURE_SCHEMA}});
-            ajv.addSchema(require("./schemas/devContainer.codespaces.schema.json"), ${{env.DEVCONTAINER_CODESPACES_SCHEMA}});
-            ajv.addSchema(require("./schemas/devContainer.vscode.schema.json"), ${{env.DEVCONTAINER_VSCODE_SCHEMA}});
+            ajv.addSchema(require("./schemas/devContainer.complete.schema.json"), ${{env.SCHEMA}});
+            ajv.addSchema(require("./schemas/devContainerFeature.schema.json"), ${{env.FEATURE_SCHEMA}});
+            ajv.addSchema(require("./schemas/devContainer.codespaces.schema.json"), ${{env.CODESPACES_SCHEMA}});
+            ajv.addSchema(require("./schemas/devContainer.vscode.schema.json"), ${{env.VSCODE_SCHEMA}});
             ajv.addSchema(require("./schemas/devContainer.vscode.machine.schema.json"), "vscode://schemas/settings/machine");
-            let validator = ajv.compile(require("./schemas/devContainer.base.schema.json"), ${{env.DEVCONTAINER_BASE_SCHEMA}});
+            let validator = ajv.compile(require("./schemas/devContainer.base.schema.json"), ${{env.BASE_SCHEMA}});
             
             const data = JSON.parse(fs.readFileSync(path.join(".", "schemas/devcontainer.json")));
             
@@ -118,5 +120,4 @@ jobs:
               console.error("Error Schema: " + error.schema);
               console.error("Schema name: " + error.parentSchema.$id);
             }
-
         continue-on-error: true
