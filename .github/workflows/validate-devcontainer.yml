@@ -24,12 +24,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22.x'
-      - run: |
-          npm i ajv json-merge-patch ajv-keywords ajv-merge-patch ajv-formats ajv-errors
-
+      - run: npm i ajv json-merge-patch ajv-keywords ajv-merge-patch ajv-formats ajv-errors
       - name: Stage Testing Area
-        run: |
-          mkdir -p schemas/ && cp "${{github.workspace}}/.devcontainer/devcontainer.json" schemas/
+        run: mkdir -p schemas/ && cp "${{github.workspace}}/.devcontainer/devcontainer.json" schemas/
 
       - name: Devcontainer Schemas
         env:
@@ -105,7 +102,7 @@ jobs:
             const data = JSON.parse(fs.readFileSync(path.join(".", "schemas/devcontainer.json")));
             
             if (validator(data)) {
-              console.log("devcontainer.json is fully validated");
+              console.log("devcontainer.json is fully validated"); 
             } else {
               let error = validator.errors[0];
               console.error("Msg: " + error.message);
