@@ -33,18 +33,18 @@ jobs:
           shellcheck ".devcontainer/pa_welcome.sh"
           shellcheck ".devcontainer/pa_stellar_accounts.sh"
 
-      - name: pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-          standalone: 'true'
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           cache: pnpm
           check-latest: 'true'
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          standalone: 'true'
       - run: |
-          npm i pnpm
           NPM_PREFIX=$(pnpm config list -json | jq -r '.prefix')
           NPM_ROOT=$(pnpm root | echo)
           export BATS_LIB_PATH=${BATS_LIB_PATH:-"${NPM_PREFIX}/lib/node_modules"}
