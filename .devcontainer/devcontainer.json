@@ -78,7 +78,7 @@
 	  }
 	}
   },
-  "initializeCommand": "make all",
+  "initializeCommand": "make",
   "onCreateCommand": "chmod -R +x .devcontainer/",
   "updateContentCommand": "",
   "postCreateCommand": "",
