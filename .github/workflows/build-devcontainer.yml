@@ -43,7 +43,9 @@ jobs:
           NPM_ROOT=$(npm root | echo)
           export BATS_LIB_PATH=${BATS_LIB_PATH:-"${NPM_ROOT}"}
           
-          npm i bats bats-support bats-assert bats-file && npm update
+          npm i bats --save-exact bats-support@0.3.0 --save-exact bats-assert --save-exact \
+          bats-file --save-exact && npm update
+          
           npm exec bats .devcontainer/post_start_cli_autocomplete_test.bats
           ls -latr ${BATS_LIB_PATH}
 
