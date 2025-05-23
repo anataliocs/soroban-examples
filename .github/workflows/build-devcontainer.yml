@@ -36,10 +36,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
           cache: pnpm
           check-latest: 'true'
       - run: |
+          npm i pnpm
           NPM_PREFIX=$(pnpm config list -json | jq -r '.prefix')
           NPM_ROOT=$(pnpm root | echo)
           export BATS_LIB_PATH=${BATS_LIB_PATH:-"${NPM_PREFIX}/lib/node_modules"}
