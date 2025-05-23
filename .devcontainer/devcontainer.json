@@ -2,17 +2,30 @@
   "name": "Soroban Examples",
   "dockerFile": "Dockerfile",
   "context": "..",
+  containerEnv: {
+	"REGISTRY": "docker.io",
+	"REGISTRY-OWNER": "stellar",
+	"PREBUILD_IMG": "vsc-soroban-examples-prebuild"
+  },
   "build": {
 	"cacheFrom": [
-	  "chrisstellar/vsc-soroban-examples-prebuild"
+	  "${containerEnv:REGISTRY}/${containerEnv:REGISTRY-OWNER}/${containerEnv:PREBUILD_IMG}"
 	],
 	"args": {
 	  "BUILDKIT_INLINE_CACHE": "1"
 	},
 	"options": [
 	  "--output",
-	  "type=image,compression=zstd",
-	  "--quiet"
+	  "type=image,name=docker.io/chrisstellar/vsc-soroban-examples-prebuild:image,compression=zstd,push=true",
+	  "--quiet",
+	  "--import-cache",
+	  "type=registry,ref=docker.io/chrisstellar/vsc-soroban-examples-prebuild",
+	  "--import-cache",
+	  "type=inline",
+	  "--export-cache",
+	  "type=inline",
+	  "--export-cache",
+	  "type=registry,ref=docker.io/chrisstellar/vsc-soroban-examples-prebuild,mode=max,image-manifest=true,oci-mediatypes=true,compression=zstd",
 	]
   },
   "hostRequirements": {
