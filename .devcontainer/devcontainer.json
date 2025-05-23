@@ -10,7 +10,8 @@
 	  "BUILDKIT_INLINE_CACHE": "1"
 	},
 	"options": [
-	  "--output type=image,compression=zstd",
+	  "--output",
+	  "type=image,compression=zstd",
 	  "--quiet"
 	]
   },
