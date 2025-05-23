@@ -65,6 +65,7 @@ jobs:
       - name: Validate Schema
         uses: actions/github-script@v7
         with:
+          debug: '${{ runner.debug == '1' }}'
           script: |
             const Ajv2019 = require("ajv/dist/2019");
             const meta = require("ajv/dist/refs/json-schema-2019-09/meta/core");
@@ -101,7 +102,7 @@ jobs:
             let addKeywords = require("ajv-keywords/dist/definitions");
             addFormats(ajv);
             addKeywords(ajv);
-            ajv.addMetaSchema(meta, "http://$${{S2019}}#", false);
+            ajv.addMetaSchema(meta, "http://${{env.S2019}}#", false);
             
             ajv.addSchema(require("./schemas/complete.schema.json"), ${{env.SCHEMA}});
             ajv.addSchema(require("./schemas/feature.schema.json"), ${{env.FEATURE_SCHEMA}});
