@@ -43,15 +43,18 @@ jobs:
 
   login:
     name: Docker Login
-    uses: docker/login-action@v3
-    with:
-      username: ${{ secrets.DOCKERHUB_USERNAME }}
-      password: ${{ secrets.DOCKERHUB_TOKEN }}
-      ecr: 'false'
-      logout: 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dcoker Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          ecr: 'false'
+          logout: 'false'
 
   build-docker:
-    name: Devcontainer CLI Build
+    name: Devcontainer Build
     runs-on: ubuntu-latest
 
     steps:
