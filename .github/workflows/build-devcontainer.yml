@@ -56,7 +56,6 @@ jobs:
   build-docker:
     name: Devcontainer Build
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -68,7 +67,7 @@ jobs:
       - run: npm install -g @devcontainers/cli
         working-directory: ${{ github.workspace }}
 
-      - name: Devcontainer Build
+      - name: CLI Build
         run: |
           chmod +x ${{github.workspace}}/.devcontainer/tests/build_devcontainer_ci.sh
           ${{github.workspace}}/.devcontainer/tests/build_devcontainer_ci.sh $DEFAULT_PREBUILD_IMG $DEFAULT_OCI_IMG
@@ -76,6 +75,6 @@ jobs:
           echo "### Devcontainer CLI Build Successful!!! :rocket:" >> $GITHUB_STEP_SUMMARY
         env:
           BUILDKIT_INLINE_CACHE: 1
-          DEFAULT_PREBUILD_IMG: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.DEFAULT_PREBUILD_IMG }}
-          DEFAULT_OCI_IMG: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.DEFAULT_OCI_IMG }}
+          DEFAULT_PREBUILD_IMG: stellar/${{ github.event.inputs.DEFAULT_PREBUILD_IMG }}
+          DEFAULT_OCI_IMG: stellar/${{ github.event.inputs.DEFAULT_OCI_IMG }}
         working-directory: ${{github.workspace}}
