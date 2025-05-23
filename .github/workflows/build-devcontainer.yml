@@ -21,12 +21,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .devcontainer
       - name: Run Shellcheck
         env:
           SHELLCHECK_OPTS: -s bash
         shell: bash
         run: |
           shellcheck ".devcontainer/post_start_cli_autocomplete.sh"
+          shellcheck ".devcontainer/post_attach_welcome_text.sh"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -35,8 +39,7 @@ jobs:
         with:
           node-version: '22.x'
       - run: |
-          echo "export NODE_PATH='/usr/local/bin/:$NODE_PATH'" >> $NODE_PATH
-          ls -latr
+          npm config list
           npm install -g bats bats-support bats-assert bats-file
           bats .devcontainer/post_start_cli_autocomplete_test.bats
         working-directory: ${{ github.workspace }}
@@ -49,6 +52,7 @@ jobs:
       username: ${{ secrets.DOCKERHUB_USERNAME }}
       password: ${{ secrets.DOCKERHUB_TOKEN }}
     steps:
+      - uses: actions/checkout@v4
       - name: Docker Login
         uses: docker/login-action@v3
         with:
@@ -68,4 +72,5 @@ jobs:
           cacheFrom: chrisstellar/vsc-soroban-examples-prebuild
           cacheTo: chrisstellar/vsc-soroban-examples-prebuild
           push: always
+          configFile: '${{github.workspace}}/.devcontainer/devcontainer.json'
 
