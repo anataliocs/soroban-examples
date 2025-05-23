@@ -8,7 +8,11 @@
 	],
 	"args": {
 	  "BUILDKIT_INLINE_CACHE": "1"
-	}
+	},
+	"options": [
+	  "--output type=image,compression=zstd",
+	  "--quiet"
+	]
   },
   "hostRequirements": {
 	"cpus": 4,
