@@ -37,7 +37,7 @@ jobs:
         with:
           node-version: '22.x'
       - run: |
-          npm install -g bats
+          npm install -g bats bats-support bats-assert bats-file
           bats .devcontainer/post_start_cli_autocomplete_test.bats
         working-directory: ${{ github.workspace }}
 

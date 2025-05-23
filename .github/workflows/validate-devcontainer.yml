@@ -49,8 +49,7 @@ jobs:
         run: |
           curl ${{env.BASE_SCHEMA}} | jq ". + {\"\$id\": \"${{env.BASE_SCHEMA}}\"}" > base.schema.json
           curl ${{env.SCHEMA}} | jq ". + {\"\$id\": \"${{env.SCHEMA}}\"}" > schema.json
-          curl ${{env.FEATURE_SCHEMA}} | jq ". + {\"\$id\": \"${{env.FEATURE_SCHEMA}}\"}" > feature
-          .schema.json
+          curl ${{env.FEATURE_SCHEMA}} | jq ". + {\"\$id\": \"${{env.FEATURE_SCHEMA}}\"}" > feature.schema.json
           curl ${{env.CODESPACES_SCHEMA}} | jq ". + {\"\$id\": \"${{env.CODESPACES_SCHEMA}}\"}" > codespaces.schema.json
           curl ${{env.VSCODE_SCHEMA}} | jq ". + {\"\$id\": \"${{env.VSCODE_SCHEMA}}\"}" > vscode.schema.json
           curl ${{env.VSCODE_MACHINE_SCHEMA}} | jq ". + {\"\$id\": \"vscode://schemas/settings/machine\"}" > vscode.machine.schema.json
