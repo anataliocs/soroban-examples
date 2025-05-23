@@ -19,9 +19,9 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.4.0
         with:
           node-version: '22.x'
       - run: npm i ajv json-merge-patch ajv-keywords ajv-merge-patch ajv-formats ajv-errors
@@ -52,7 +52,7 @@ jobs:
         working-directory: schemas/
 
       - name: Validate Schema
-        uses: actions/github-script@v7
+        uses: actions/github-script@v7.0.1
         with:
           script: |
             const Ajv2019 = require("ajv/dist/2019");

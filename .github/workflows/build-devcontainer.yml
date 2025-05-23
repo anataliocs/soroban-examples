@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
         with:
           sparse-checkout: |
             .devcontainer
@@ -49,19 +49,19 @@ jobs:
           ecr: 'false'
           logout: 'false'
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
         with:
           clean: 'true'
           path: '.'
       - name: Set up QEMU for multi-architecture builds
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3.6.0
       - name: Setup Docker buildx for multi-architecture builds
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.10.0
         with:
           use: true
           cache-binary: 'true'
       - name: Pre-build Devcontainer
-        uses: devcontainers/ci@v0.3
+        uses: devcontainers/ci@v0.3.1900000417
         with:
           imageName: ${{env.username}}/vsc-soroban-examples-prebuild
           cacheFrom: ${{env.username}}/vsc-soroban-examples-prebuild
