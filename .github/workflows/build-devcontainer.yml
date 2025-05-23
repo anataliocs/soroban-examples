@@ -65,7 +65,7 @@ jobs:
           driver-opts: image=moby/buildkit:master
           cache-binary: 'true'
           version: "v0.24.0"
-          buildkitd-flags: |
+          buildkitd-config-inline: |
             --cache-to=type=gha
 
       - name: Pre-build Devcontainer
